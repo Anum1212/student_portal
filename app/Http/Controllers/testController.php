@@ -18,6 +18,7 @@ class testController extends Controller
         $societyAnnouncement = Society::find(1)->announcement;
         $societyUsers = Society::find(1)->users;
         $studentSocieties = User::find(3)->society;
-        dd('departmentAnnouncement', $departmentAnnouncement,'departmentUsers', $departmentUsers,'societyAnnouncement', $societyAnnouncement,'societyUsers', $societyUsers, 'studentSocieties', $studentSocieties);
+        // dd('departmentAnnouncement', $departmentAnnouncement,'departmentUsers', $departmentUsers,'societyAnnouncement', $societyAnnouncement,'societyUsers', $societyUsers, 'studentSocieties', $studentSocieties);
+        return view('layouts.dashboard');
     }
 }
