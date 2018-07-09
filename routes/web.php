@@ -29,6 +29,7 @@ Route::prefix('superadmin')->group(function () {
     Route::post('/addDepartment', 'superAdminController@addDepartment')->name('superAdmin.addDepartment');
     Route::get('/editDepartmentForm/{departmentId}', 'superAdminController@editDepartmentForm')->name('superAdmin.editDepartmentForm');
     Route::put('/editDepartment/{departmentId}', 'superAdminController@editDepartment')->name('superAdmin.editDepartment');
+    Route::get('/searchDepartment', 'superAdminController@searchDepartment')->name('superAdmin.searchDepartment');
     Route::delete('/deleteDepartment/{departmentId}', 'superAdminController@deleteDepartment')->name('superAdmin.deleteDepartment');
     // ************ DEPARTMENT ADMIN MANAGMENT ROUTES ************
     Route::get('/viewAllDepartmentAdmins', 'superAdminController@viewAllDepartmentAdmins')->name('superAdmin.viewAllDepartmentAdmins');
@@ -36,6 +37,7 @@ Route::prefix('superadmin')->group(function () {
     Route::post('/addDepartmentAdmin', 'superAdminController@addDepartmentAdmin')->name('superAdmin.addDepartmentAdmin');
     Route::get('/editDepartmentAdminForm/{departmentAdminId}', 'superAdminController@editDepartmentAdminForm')->name('superAdmin.editDepartmentAdminForm');
     Route::put('/editDepartmentAdmin/{departmentAdminId}', 'superAdminController@editDepartmentAdmin')->name('superAdmin.editDepartmentAdmin');
+    Route::get('/searchDepartmentAdmin', 'superAdminController@searchDepartmentAdmin')->name('superAdmin.searchDepartmentAdmin');
     Route::delete('/deleteDepartmentAdmin/{departmentAdminId}', 'superAdminController@deleteDepartmentAdmin')->name('superAdmin.deleteDepartmentAdmin');
     // ************ SOCIETY MANAGMENT ROUTES ************
     Route::get('/viewAllSocieties', 'superAdminController@viewAllSocieties')->name('superAdmin.viewAllSocieties');
@@ -43,6 +45,7 @@ Route::prefix('superadmin')->group(function () {
     Route::post('/addSociety', 'superAdminController@addSociety')->name('superAdmin.addSociety');
     Route::get('/editSocietyForm/{societyId}', 'superAdminController@editSocietyForm')->name('superAdmin.editSocietyForm');
     Route::put('/editSociety/{societyId}', 'superAdminController@editSociety')->name('superAdmin.editSociety');
+    Route::get('/searchSociety', 'superAdminController@searchSociety')->name('superAdmin.searchSociety');
     Route::delete('/deleteSociety/{societyId}', 'superAdminController@deleteSociety')->name('superAdmin.deleteSociety');
     // ************ SOCIETY ADMIN MANAGMENT ROUTES ************
     Route::get('/viewAllSocietyAdmins', 'superAdminController@viewAllSocietyAdmins')->name('superAdmin.viewAllSocietyAdmins');
@@ -50,7 +53,16 @@ Route::prefix('superadmin')->group(function () {
     Route::post('/addSocietyAdmin', 'superAdminController@addSocietyAdmin')->name('superAdmin.addSocietyAdmin');
     Route::get('/editSocietyAdminForm/{societyAdminId}', 'superAdminController@editSocietyAdminForm')->name('superAdmin.editSocietyAdminForm');
     Route::put('/editSocietyAdmin/{societyAdminId}', 'superAdminController@editSocietyAdmin')->name('superAdmin.editSocietyAdmin');
+    Route::get('/searchSocietyAdmin', 'superAdminController@searchSocietyAdmin')->name('superAdmin.searchSocietyAdmin');
     Route::delete('/deleteSocietyAdmin/{societyAdminId}', 'superAdminController@deleteSocietyAdmin')->name('superAdmin.deleteSocietyAdmin');
+    // ************ STUDENT MANAGMENT ROUTES ************
+    Route::get('/viewAllStudents', 'superAdminController@viewAllStudents')->name('superAdmin.viewAllStudents');
+    Route::get('/addStudentForm', 'superAdminController@addStudentForm')->name('superAdmin.addStudentForm');
+    Route::post('/addStudent', 'superAdminController@addStudent')->name('superAdmin.addStudent');
+    Route::get('/editStudentForm/{StudentId}', 'superAdminController@editStudentForm')->name('superAdmin.editStudentForm');
+    Route::put('/editStudent/{StudentId}', 'superAdminController@editStudent')->name('superAdmin.editStudent');
+    Route::get('/searchStudent', 'superAdminController@searchStudent')->name('superAdmin.searchStudent');
+    Route::delete('/deleteStudent/{StudentId}', 'superAdminController@deleteStudent')->name('superAdmin.deleteStudent');
 });
 
 

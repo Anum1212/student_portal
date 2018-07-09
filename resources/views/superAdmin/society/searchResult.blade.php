@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form autocomplete="off" action="{{ route('superAdmin.searchDepartmentAdmin') }}" method="get">
+                    <form autocomplete="off" action="{{ route('superAdmin.searchSociety') }}" method="get">
                         <div class="form-group">
                             <div class="input-group input-group-rounded">
                                 <input type="text" placeholder="Search Round" name="search" class="form-control">
@@ -23,26 +23,25 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Code</th>
                                     <th>Name</th>
-                                    <th>Department</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($departmentAdmins as $departmentAdmin)
+                                @foreach ($results as $result)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $departmentAdmin->name }}</td>
-                                    <td>{{ $departmentAdmin->department->departmentCode .' '. $departmentAdmin->department->departmentName
-                                        }}</td>
+                                    <td>{{ $result->societyCode }}</td>
+                                    <td>{{ $result->societyName }}</td>
                                     <td>
-                                        <a class="text-primary" href="{{ route('superAdmin.editDepartmentAdminForm', ['departmentAdminId'=>$departmentAdmin->id]) }}">
+                                        <a class="text-primary" href="{{ route('superAdmin.editSocietyForm', ['id'=>$result->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('superAdmin.deleteDepartmentAdmin', ['departmentAdminId'=>$departmentAdmin->id]) }}" method="post">
+                                        <form action="{{ route('superAdmin.deleteSociety', ['id'=>$result->id]) }}" method="post">
                                             {{csrf_field()}} {{method_field('delete')}}
                                             <button type="submit" class="confirmAction btn-danger" disabled="disabled">Delete</button>
                                         </form>

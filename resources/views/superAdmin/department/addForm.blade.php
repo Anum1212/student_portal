@@ -11,25 +11,25 @@
                         <div class="form-body">
                             <h3 class="box-title m-t-15">Add Department</h3>
                             <hr class="m-t-0 m-b-40">
-                                    <div class="form-group row">
-                                        <label class="control-label text-right col-md-3">Department Code</label>
-                                        <div class="col-md-9">
-                                            <input name="code" type="text" class="form-control" required>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                            <label class="control-label text-right col-md-3">Department Name</label>
-                                        <div class="col-md-9">
-                                            <input name="name" type="text" class="form-control" required>
-                                        </div>
-                                    </div>
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Department Code</label>
+                                <div class="col-md-9">
+                                    <input name="code" type="text" class="form-control" required>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Department Name</label>
+                                <div class="col-md-9">
+                                    <input name="name" type="text" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         <div class="form-actions">
-                                        <div class="pull-right">
+                            <div class="pull-right">
                                 <button type="submit" class="confirmAction btn btn-success">Submit</button>
                                 <a href="{{ route('superAdmin.viewAllDepartmentAdmins') }}" type="button" class="confirmAction btn btn-inverse">Cancel</a>
-                                        </div>
+                            </div>
                         </div>
                     </form>
                 </div>

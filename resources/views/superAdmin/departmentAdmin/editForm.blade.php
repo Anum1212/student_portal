@@ -6,10 +6,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form autocomplete="off" action="{{ route('superAdmin.editDepartmentAdmin', ['departmentAdminId'=>$details->id]) }}" class="form-horizontal" method="POST">
+                    <form autocomplete="off" action="{{ route('superAdmin.editDepartmentAdmin', ['departmentAdminId'=>$details->id]) }}" class="form-horizontal"
+                        method="POST">
                         {{ csrf_field() }} {{ method_field('put') }}
                         <div class="form-body">
-                            <h3 class="box-title m-t-15">Add Department Admin</h3>
+                            <h3 class="box-title m-t-15">Edit Department Admin</h3>
                             <hr class="m-t-0 m-b-40">
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Name</label>
@@ -40,10 +41,11 @@
                                 <div class="col-md-9">
                                     <select name="department" class="form-control" required>
                                         @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}" <?php if($details->department_id==$department->id) echo 'selected="selected"'; ?> >{{ $department->departmentName }}</option>
+                                        <option value="{{ $department->id }}" <?php if($details->department_id==$department->id) echo 'selected="selected"'; ?> >{{ $department->departmentName
+                                            }}</option>
                                         @endforeach
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <hr>

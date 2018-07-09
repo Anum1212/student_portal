@@ -13,25 +13,36 @@
 // 5) addDepartment
 // 6) editDepartmentForm
 // 7) editDepartment
-// 8) deleteDepartment
-// 9) viewAllDepartmentAdmins
-// 10) addDepartmentAdminForm
-// 11) addDepartmentAdmin
-// 12) editDepartmentAdminForm
-// 13) editDepartmentAdmin
-// 14) deleteDepartmentAdmin
-// 15) viewAllSocieties
-// 16) addSocietyForm
-// 17) addSociety
-// 18) editSocietyForm
-// 19) editSociety
-// 20) deleteSociety
-// 21) viewAllSocietyAdmins
-// 22) addSocietyAdminForm
-// 23) addSocietyAdmin
-// 24) editSocietyAdminForm
-// 25) editSocietyAdmin
-// 26) deleteSocietyAdmin
+// 8) searchDepartment
+// 9) deleteDepartment
+// 10) viewAllDepartmentAdmins
+// 11) addDepartmentAdminForm
+// 12) addDepartmentAdmin
+// 13) editDepartmentAdminForm
+// 14) editDepartmentAdmin
+// 15) searchDepartmentAdmin
+// 16) deleteDepartmentAdmin
+// 17) viewAllSocieties
+// 18) addSocietyForm
+// 19) addSociety
+// 20) editSocietyForm
+// 21) editSociety
+// 22) searchSociety
+// 23) deleteSociety
+// 24) viewAllSocietyAdmins
+// 25) addSocietyAdminForm
+// 26) addSocietyAdmin
+// 27) editSocietyAdminForm
+// 28) editSocietyAdmin
+// 29) searchSocietyAdmin
+// 30) deleteSocietyAdmin
+// 31) viewAllStudents
+// 32) addStudentForm
+// 33) addStudent
+// 34) editStudentForm
+// 35) editStudent
+// 36) searchStudent
+// 37) deleteStudent
 
 
 
@@ -122,7 +133,16 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 8) deleteDepartment ----------------------------------|
+    // |---------------------------------- 8) searchDepartment ----------------------------------|
+    public function searchDepartment(Request $req)
+    {
+        $results = Department::where('departmentCode', 'LIKE', '%' . $req->search . '%')->orWhere('departmentName', 'LIKE', '%' . $req->search . '%')->get();
+        return view('superAdmin.department.searchResult', compact('results'));
+    }
+
+
+
+    // |---------------------------------- 9) deleteDepartment ----------------------------------|
     public function deleteDepartment($departmentId)
     {
         $details = Department::find($departmentId);
@@ -131,7 +151,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 9) viewAllDepartmentAdmins ----------------------------------|
+    // |---------------------------------- 10) viewAllDepartmentAdmins ----------------------------------|
     public function viewAllDepartmentAdmins()
     {
         $departmentAdmins = User::where('userType', '1')->get();
@@ -140,7 +160,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 10) addDepartmentAdminForm ----------------------------------|
+    // |---------------------------------- 11) addDepartmentAdminForm ----------------------------------|
     public function addDepartmentAdminForm()
     {
         $departments = Department::all();
@@ -149,7 +169,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 11) addDepartmentAdmin ----------------------------------|
+    // |---------------------------------- 12) addDepartmentAdmin ----------------------------------|
     public function addDepartmentAdmin(Request $req)
     {
         $admin = new User;
@@ -165,7 +185,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 12) editDepartmentAdminForm ----------------------------------|
+    // |---------------------------------- 13) editDepartmentAdminForm ----------------------------------|
     public function editDepartmentAdminForm($departmentAdminId)
     {
         $details = User::find($departmentAdminId);
@@ -175,7 +195,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 13) editDepartmentAdmin ----------------------------------|
+    // |---------------------------------- 14) editDepartmentAdmin ----------------------------------|
     public function editDepartmentAdmin(Request $req, $departmentAdminId)
     {
         $admin = User::find($departmentAdminId);
@@ -207,7 +227,19 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 14) deleteDepartmentAdmin ----------------------------------|
+    // |---------------------------------- 15) searchDepartmentAdmin ----------------------------------|
+    public function searchDepartmentAdmin(Request $req)
+    {
+        $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
+            ->orWhere([['email', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
+            ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
+            ->get();
+        return view('superAdmin.departmentAdmin.searchResult', compact('results'));
+    }
+
+
+
+    // |---------------------------------- 16) deleteDepartmentAdmin ----------------------------------|
     public function deleteDepartmentAdmin($departmentAdminId)
     {
         $details = User::find($departmentAdminId);
@@ -216,7 +248,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 15) viewAllSocieties ----------------------------------|
+    // |---------------------------------- 17) viewAllSocieties ----------------------------------|
     public function viewAllSocieties()
     {
         $societies = Society::all();
@@ -225,7 +257,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 16) addSocietyForm ----------------------------------|
+    // |---------------------------------- 18) addSocietyForm ----------------------------------|
     public function addSocietyForm()
     {
         return view('superAdmin.society.addForm');
@@ -233,7 +265,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 17) addSociety ----------------------------------|
+    // |---------------------------------- 19) addSociety ----------------------------------|
     public function addSociety(Request $req)
     {
         $society = new Society;
@@ -245,7 +277,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 18) editSocietyForm ----------------------------------|
+    // |---------------------------------- 20) editSocietyForm ----------------------------------|
     public function editSocietyForm($societyId)
     {
         $details = Society::find($societyId);
@@ -254,7 +286,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 19) editSociety ----------------------------------|
+    // |---------------------------------- 21) editSociety ----------------------------------|
     public function editSociety(Request $req, $societyId)
     {
         $details = Society::find($societyId);
@@ -266,7 +298,16 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 20) deleteSociety ----------------------------------|
+    // |---------------------------------- 22) searchSociety ----------------------------------|
+    public function searchSociety(Request $req)
+    {
+        $results = Society::where('societyCode', 'LIKE', '%' . $req->search . '%')->orWhere('societyName', 'LIKE', '%' . $req->search . '%')->get();
+        return view('superAdmin.society.searchResult', compact('results'));
+    }
+
+
+
+    // |---------------------------------- 23) deleteSociety ----------------------------------|
     public function deleteSociety($societyId)
     {
         $details = Society::find($societyId);
@@ -275,7 +316,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 21) viewAllSocietyAdmins ----------------------------------|
+    // |---------------------------------- 24) viewAllSocietyAdmins ----------------------------------|
     public function viewAllSocietyAdmins()
     {
         $societyAdmins = User::where('userType','2')->get();
@@ -284,7 +325,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 22) addSocietyAdminForm ----------------------------------|
+    // |---------------------------------- 25) addSocietyAdminForm ----------------------------------|
     public function addSocietyAdminForm()
     {
         $societies = Society::all();
@@ -293,7 +334,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 23) addSocietyAdmin ----------------------------------|
+    // |---------------------------------- 26) addSocietyAdmin ----------------------------------|
     public function addSocietyAdmin(Request $req)
     {
         // save admin details
@@ -319,7 +360,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 24) editSocietyAdminForm ----------------------------------|
+    // |---------------------------------- 27) editSocietyAdminForm ----------------------------------|
     public function editSocietyAdminForm($societyAdminId)
     {
         $details = User::find($societyAdminId);
@@ -330,7 +371,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 25) editSocietyAdmin ----------------------------------|
+    // |---------------------------------- 28) editSocietyAdmin ----------------------------------|
     public function editSocietyAdmin(Request $req, $societyAdminId)
     {
         $admin = User::find($societyAdminId);
@@ -367,10 +408,119 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 26) deleteSocietyAdmin ----------------------------------|
+    // |---------------------------------- 29) searchSocietyAdmin ----------------------------------|
+    public function searchSocietyAdmin(Request $req)
+    {
+        $results = User::where([['name', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
+            ->orWhere([['email', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
+            ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
+            ->get();
+        return view('superAdmin.societyAdmin.searchResult', compact('results'));
+    }
+
+
+
+    // |---------------------------------- 30) deleteSocietyAdmin ----------------------------------|
     public function deleteSocietyAdmin($societyAdminId)
     {
         $details = User::find($societyAdminId);
         return redirect()->route('superAdmin.viewAllSocietyAdmins');
+    }
+
+
+
+    // |---------------------------------- 31) viewAllStudents ----------------------------------|
+    public function viewAllStudents()
+    {
+        $students = User::where('userType', '3')->get();
+        return view('superAdmin.student.viewAll', compact('students'));
+    }
+
+
+
+    // |---------------------------------- 32) addStudentForm ----------------------------------|
+    public function addStudentForm()
+    {
+        $departments = Department::all();
+        return view('superAdmin.student.addForm', compact('departments'));
+    }
+
+
+
+    // |---------------------------------- 33) addStudent ----------------------------------|
+    public function addStudent(Request $req)
+    {
+        $student = new User;
+        $student->name = $req->name;
+        $student->email = $req->email;
+        $student->registration = $req->registration;
+        $student->password = Hash::make($req->registration);
+        $student->department_id = $req->department;
+        $student->userType = '3';
+        $student->save();
+        return redirect()->route('superAdmin.viewAllStudents');
+    }
+
+
+
+    // |---------------------------------- 34) editStudentForm ----------------------------------|
+    public function editStudentForm($studentId)
+    {
+        $details = User::find($studentId);
+        $departments = Department::all();
+        return view('superAdmin.student.editForm', compact('details', 'departments'));
+    }
+
+
+
+    // |---------------------------------- 35) editStudent ----------------------------------|
+    public function editStudent(Request $req, $studentId)
+    {
+        $student = User::find($studentId);
+
+        // check if field email is different than student email
+        // if email is different check if it matches some other db email.
+        if ($req->email != $student->email) {
+            // Get the value from the form
+            $input['email'] = Input::get('email');
+
+        // Must not already exist in the `email` column of `users` table
+            $rules = array('email' => 'unique:users,email');
+
+            $validator = Validator::make($input, $rules);
+        // if it matches some existing email return back with error
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Entered Email already Exists');
+            }
+        }
+    // if student email unchanged or unique simply save record
+        $student->name = $req->name;
+        $student->email = $req->email;
+        $student->registration = $req->registration;
+        $student->password = Hash::make($req->registration);
+        $student->department_id = $req->department;
+        $student->save();
+        return redirect()->route('superAdmin.viewAllStudents');
+    }
+
+
+
+    // |---------------------------------- 36) searchStudent ----------------------------------|
+    public function searchStudent(Request $req)
+    {
+        $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
+            ->orWhere([['email', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
+            ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
+            ->get();
+        return view('superAdmin.student.searchResult', compact('results'));
+    }
+
+
+
+    // |---------------------------------- 37) deleteStudent ----------------------------------|
+    public function deleteStudent($studentId)
+    {
+        $details = User::find($studentId);
+        return redirect()->route('superAdmin.viewAllStudents');
     }
 }

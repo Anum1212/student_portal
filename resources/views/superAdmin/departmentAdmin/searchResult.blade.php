@@ -30,19 +30,18 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($departmentAdmins as $departmentAdmin)
+                                @foreach ($results as $result)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $departmentAdmin->name }}</td>
-                                    <td>{{ $departmentAdmin->department->departmentCode .' '. $departmentAdmin->department->departmentName
-                                        }}</td>
+                                    <td>{{ $result->name }}</td>
+                                    <td>{{ $result->department->departmentCode .' '. $result->department->departmentName }}</td>
                                     <td>
-                                        <a class="text-primary" href="{{ route('superAdmin.editDepartmentAdminForm', ['departmentAdminId'=>$departmentAdmin->id]) }}">
+                                        <a class="text-primary" href="{{ route('superAdmin.editDepartmentAdminForm', ['departmentAdminId'=>$result->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('superAdmin.deleteDepartmentAdmin', ['departmentAdminId'=>$departmentAdmin->id]) }}" method="post">
+                                        <form action="{{ route('superAdmin.deleteDepartmentAdmin', ['departmentAdminId'=>$result->id]) }}" method="post">
                                             {{csrf_field()}} {{method_field('delete')}}
                                             <button type="submit" class="confirmAction btn-danger" disabled="disabled">Delete</button>
                                         </form>

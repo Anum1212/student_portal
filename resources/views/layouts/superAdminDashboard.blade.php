@@ -13,7 +13,6 @@
     <title>Ela - Bootstrap Admin Dashboard Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="/themeAssets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/themeAssets/css/helper.css" rel="stylesheet">
     <link href="/themeAssets/css/style.css" rel="stylesheet">
@@ -114,6 +113,12 @@
                                 <li><a href="{{ route('superAdmin.viewAllSocietyAdmins') }}">View Society Admins</a></li>
                                 <li><a href="{{ route('superAdmin.addSocietyAdminForm') }}">Add Society Admin</a></li>
                             </ul>
+                        </li>
+                        <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="text-success fa fa-graduation-cap" aria-hidden="true"></i></i><span class="hide-menu">Students</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ route('superAdmin.viewAllStudents') }}">View Students</a></li>
+                                <li><a href="{{ route('superAdmin.addStudentForm') }}">Add Student</a></li>
+                                </ul>
                         </li>
                     </ul>
                 </nav>

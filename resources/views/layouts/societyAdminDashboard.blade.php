@@ -13,7 +13,6 @@
     <title>Ela - Bootstrap Admin Dashboard Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="/themeAssets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="/themeAssets/css/helper.css" rel="stylesheet">
     <link href="/themeAssets/css/style.css" rel="stylesheet">

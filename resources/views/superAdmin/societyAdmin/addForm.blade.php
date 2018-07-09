@@ -42,8 +42,8 @@
                                         @foreach ($societies as $society)
                                         <option value="{{ $society->id }}">{{ $society->societyName }}</option>
                                         @endforeach
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <hr>
