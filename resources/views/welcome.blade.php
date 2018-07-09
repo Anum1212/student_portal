@@ -69,7 +69,15 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                    @if(Auth::user()->userType=='0')
+                        <a href="{{ url('/superadmin/dashboard') }}">Home</a>
+                    @elseif(Auth::user()->userType=='1')
+                            <a href="{{ url('/departmentadmin/dashboard') }}">Home</a>
+                    @elseif(Auth::user()->userType=='2')
+                            <a href="{{ url('/societyadmin/dashboard') }}">Home</a>
+                    @elseif(Auth::user()->userType=='3')
+                            <a href="{{ url('/student/dashboard') }}">Home</a>
+                    @endif
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>

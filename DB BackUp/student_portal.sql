@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2018 at 10:09 PM
+-- Generation Time: Jul 09, 2018 at 02:42 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -32,16 +32,17 @@ CREATE TABLE `departments` (
   `id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `deparmentName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `departmentName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `departmentCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `departments`
 --
 
-INSERT INTO `departments` (`id`, `created_at`, `updated_at`, `deparmentName`) VALUES
-(1, NULL, NULL, 'SE'),
-(2, NULL, NULL, 'CS');
+INSERT INTO `departments` (`id`, `created_at`, `updated_at`, `departmentName`, `departmentCode`) VALUES
+(1, NULL, NULL, 'SE', ''),
+(2, NULL, NULL, 'CS', '');
 
 -- --------------------------------------------------------
 
@@ -114,16 +115,18 @@ CREATE TABLE `societies` (
   `id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `societyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `societyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `societyCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `societies`
 --
 
-INSERT INTO `societies` (`id`, `created_at`, `updated_at`, `societyName`) VALUES
-(1, NULL, NULL, 'Swimming'),
-(2, NULL, NULL, 'Horse Ridding');
+INSERT INTO `societies` (`id`, `created_at`, `updated_at`, `societyName`, `societyCode`) VALUES
+(1, NULL, NULL, 'Swimming', ''),
+(2, NULL, '2018-07-09 03:40:43', 'horse ridding', 'hr1'),
+(3, '2018-07-09 03:41:45', '2018-07-09 03:41:45', 'football', 'fb1');
 
 -- --------------------------------------------------------
 
@@ -180,27 +183,29 @@ INSERT INTO `society_user` (`id`, `user_id`, `society_id`, `created_at`, `update
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `department_id` int(11) NOT NULL,
+  `department_id` int(11) DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userType` int(11) NOT NULL,
   `registration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `department_id`, `name`, `userType`, `registration`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(0, 0, 'Super Admin', 0, '', 'a@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL),
-(1, 1, 'SE Admin', 1, '', 'b@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL),
-(2, 2, 'CS Admin', 1, '', 'c@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL),
-(3, 1, 'SE Student', 3, 'bsse02143140', 'd@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL),
-(4, 2, 'CS Student', 3, 'bsse46487964', 'e@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL),
-(5, 1, 'Swimming Admin', 2, '', 'f@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL);
+INSERT INTO `users` (`id`, `department_id`, `name`, `userType`, `registration`, `email`, `password`, `created_at`, `updated_at`, `remember_token`) VALUES
+(0, 0, 'Super Admin', 0, '', 'a@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(1, 1, 'SE Admin', 1, '', 'b@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(2, 2, 'CS Admin', 1, '', 'c@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(3, 1, 'SE Student', 3, 'bsse02143140', 'd@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(4, 2, 'CS Student', 3, 'bsse46487964', 'e@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(5, 1, 'Swimming Admin', 2, '', 'f@gmail.com', '$2y$10$JrXFdHMvIZbDHhM8FrBYfOZduIpyv4dTEHdA7JQlGkHTUYnS/5zGe', NULL, NULL, NULL),
+(6, 1, 'anum amir', 1, '147147', 'z@gmail.com', '$2y$10$aDBrZHL35cSfChql.TZWi.ZLsxpCHzVjpyQSnYNd.GdeMJs6K8MwK', '2018-07-09 05:41:40', '2018-07-09 07:24:14', NULL);
 
 --
 -- Indexes for dumped tables
@@ -263,7 +268,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `department_announcements`
@@ -281,7 +286,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `societies`
 --
 ALTER TABLE `societies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `society_announcements`
@@ -299,7 +304,7 @@ ALTER TABLE `society_user`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

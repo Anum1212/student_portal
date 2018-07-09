@@ -18,7 +18,18 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            if (Auth::user()->userType == '0') {
+                return redirect()->route('superAdmin.dashboard');
+            } 
+            if (Auth::user()->userType == '1') {
+                return redirect()->route('departmentAdmin.dashboard');
+            } 
+            if (Auth::user()->userType == '2') {
+                return redirect()->route('societyAdmin.dashboard');
+            } 
+            if (Auth::user()->userType == '3') {
+                return redirect()->route('student.dashboard');
+            } 
         }
 
         return $next($request);

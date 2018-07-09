@@ -17,6 +17,7 @@ class CreateSocietiesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('societyName');
+            $table->string('societyCode');
             $table->string('user_id')->nullable();
         });
     }

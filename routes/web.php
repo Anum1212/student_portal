@@ -1,18 +1,79 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', 'testController@index');
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
+// |---------------------------------- testController Routes ----------------------------------|
+Route::prefix('test')->group(function () {
+    Route::get('/', 'testController@index');
+});
+
+
+// |---------------------------------- Authentication Routes Routes ----------------------------------|
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+// |---------------------------------- superadmin Routes ----------------------------------|
+Route::prefix('superadmin')->group(function () {
+    Route::get('/dashboard', 'superAdminController@index')->name('superAdmin.dashboard');
+    // ************ DEPARTMENT MANAGMENT ROUTES ************
+    Route::get('/viewAllDepartments', 'superAdminController@viewAllDepartments')->name('superAdmin.viewAllDepartments');
+    Route::get('/addDepartmentForm', 'superAdminController@addDepartmentForm')->name('superAdmin.addDepartmentForm');
+    Route::post('/addDepartment', 'superAdminController@addDepartment')->name('superAdmin.addDepartment');
+    Route::get('/editDepartmentForm/{departmentId}', 'superAdminController@editDepartmentForm')->name('superAdmin.editDepartmentForm');
+    Route::put('/editDepartment/{departmentId}', 'superAdminController@editDepartment')->name('superAdmin.editDepartment');
+    Route::delete('/deleteDepartment/{departmentId}', 'superAdminController@deleteDepartment')->name('superAdmin.deleteDepartment');
+    // ************ DEPARTMENT ADMIN MANAGMENT ROUTES ************
+    Route::get('/viewAllDepartmentAdmins', 'superAdminController@viewAllDepartmentAdmins')->name('superAdmin.viewAllDepartmentAdmins');
+    Route::get('/addDepartmentAdminForm', 'superAdminController@addDepartmentAdminForm')->name('superAdmin.addDepartmentAdminForm');
+    Route::post('/addDepartmentAdmin', 'superAdminController@addDepartmentAdmin')->name('superAdmin.addDepartmentAdmin');
+    Route::get('/editDepartmentAdminForm/{departmentAdminId}', 'superAdminController@editDepartmentAdminForm')->name('superAdmin.editDepartmentAdminForm');
+    Route::put('/editDepartmentAdmin/{departmentAdminId}', 'superAdminController@editDepartmentAdmin')->name('superAdmin.editDepartmentAdmin');
+    Route::delete('/deleteDepartmentAdmin/{departmentAdminId}', 'superAdminController@deleteDepartmentAdmin')->name('superAdmin.deleteDepartmentAdmin');
+    // ************ SOCIETY MANAGMENT ROUTES ************
+    Route::get('/viewAllSocieties', 'superAdminController@viewAllSocieties')->name('superAdmin.viewAllSocieties');
+    Route::get('/addSocietyForm', 'superAdminController@addSocietyForm')->name('superAdmin.addSocietyForm');
+    Route::post('/addSociety', 'superAdminController@addSociety')->name('superAdmin.addSociety');
+    Route::get('/editSocietyForm/{societyId}', 'superAdminController@editSocietyForm')->name('superAdmin.editSocietyForm');
+    Route::put('/editSociety/{societyId}', 'superAdminController@editSociety')->name('superAdmin.editSociety');
+    Route::delete('/deleteSociety/{societyId}', 'superAdminController@deleteSociety')->name('superAdmin.deleteSociety');
+    // ************ SOCIETY ADMIN MANAGMENT ROUTES ************
+    Route::get('/viewAllSocietyAdmins', 'superAdminController@viewAllSocietyAdmins')->name('superAdmin.viewAllSocietyAdmins');
+    Route::get('/addSocietyAdminForm', 'superAdminController@addSocietyAdminForm')->name('superAdmin.addSocietyAdminForm');
+    Route::post('/addSocietyAdmin', 'superAdminController@addSocietyAdmin')->name('superAdmin.addSocietyAdmin');
+    Route::get('/editSocietyAdminForm/{societyAdminId}', 'superAdminController@editSocietyAdminForm')->name('superAdmin.editSocietyAdminForm');
+    Route::put('/editSocietyAdmin/{societyAdminId}', 'superAdminController@editSocietyAdmin')->name('superAdmin.editSocietyAdmin');
+    Route::delete('/deleteSocietyAdmin/{societyAdminId}', 'superAdminController@deleteSocietyAdmin')->name('superAdmin.deleteSocietyAdmin');
+});
+
+
+
+// |---------------------------------- departmentadmin Routes ----------------------------------|
+Route::prefix('departmentadmin')->group(function () {
+Route::get('/dashboard', 'departmentAdminController@index')->name('departmentAdmin.dashboard');
+});
+
+
+
+// |---------------------------------- societyadmin Routes ----------------------------------|
+Route::prefix('societyadmin')->group(function () {
+Route::get('/dashboard', 'societyAdminController@index')->name('societyAdmin.dashboard');
+});
+
+
+
+// |---------------------------------- student Routes ----------------------------------|
+Route::prefix('student')->group(function () {
+Route::get('/dashboard', 'studentController@index')->name('student.dashboard');
+});
+
+
+
+
