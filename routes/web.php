@@ -21,8 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // |---------------------------------- superadmin Routes ----------------------------------|
-Route::prefix('superadmin')->group(function () {
-    Route::get('/dashboard', 'superAdminController@index')->name('superAdmin.dashboard');
+Route::prefix('superAdmin')->group(function () {
+    Route::get('/dashboard', 'superAdminController@dashboard')->name('superAdmin.dashboard');
     // ************ DEPARTMENT MANAGMENT ROUTES ************
     Route::get('/viewAllDepartments', 'superAdminController@viewAllDepartments')->name('superAdmin.viewAllDepartments');
     Route::get('/addDepartmentForm', 'superAdminController@addDepartmentForm')->name('superAdmin.addDepartmentForm');
@@ -68,22 +68,38 @@ Route::prefix('superadmin')->group(function () {
 
 
 // |---------------------------------- departmentadmin Routes ----------------------------------|
-Route::prefix('departmentadmin')->group(function () {
-Route::get('/dashboard', 'departmentAdminController@index')->name('departmentAdmin.dashboard');
+Route::prefix('departmentAdmin')->group(function () {
+Route::get('/dashboard', 'departmentAdminController@dashboard')->name('departmentAdmin.dashboard');
+Route::get('/viewAllAnnouncements', 'departmentAdminController@viewAllAnnouncements')->name('departmentAdmin.viewAllAnnouncements');
+Route::get('/addAnnouncementForm', 'departmentAdminController@addAnnouncementForm')->name('departmentAdmin.addAnnouncementForm');
+Route::post('/addAnnouncement', 'departmentAdminController@addAnnouncement')->name('departmentAdmin.addAnnouncement');
+Route::get('/editAnnouncementForm/{announcementId}', 'departmentAdminController@editAnnouncementForm')->name('departmentAdmin.editAnnouncementForm');
+Route::put('/editAnnouncement/{announcementId}', 'departmentAdminController@editAnnouncement')->name('departmentAdmin.editAnnouncement');
+Route::get('/searchAnnouncement', 'departmentAdminController@searchAnnouncement')->name('departmentAdmin.searchAnnouncement');
+Route::delete('/deleteAnnouncement/{announcementId}', 'departmentAdminController@deleteAnnouncement')->name('departmentAdmin.deleteAnnouncement');
 });
 
 
 
 // |---------------------------------- societyadmin Routes ----------------------------------|
-Route::prefix('societyadmin')->group(function () {
-Route::get('/dashboard', 'societyAdminController@index')->name('societyAdmin.dashboard');
+Route::prefix('societyAdmin')->group(function () {
+Route::get('/dashboard', 'societyAdminController@dashboard')->name('societyAdmin.dashboard');
+Route::get('/viewAllAnnouncements', 'societyAdminController@viewAllAnnouncements')->name('societyAdmin.viewAllAnnouncements');
+Route::get('/addAnnouncementForm', 'societyAdminController@addAnnouncementForm')->name('societyAdmin.addAnnouncementForm');
+Route::post('/addAnnouncement', 'societyAdminController@addAnnouncement')->name('societyAdmin.addAnnouncement');
+Route::get('/editAnnouncementForm/{announcementId}', 'societyAdminController@editAnnouncementForm')->name('societyAdmin.editAnnouncementForm');
+Route::put('/editAnnouncement/{announcementId}', 'societyAdminController@editAnnouncement')->name('societyAdmin.editAnnouncement');
+Route::get('/searchAnnouncement', 'societyAdminController@searchAnnouncement')->name('societyAdmin.searchAnnouncement');
+Route::delete('/deleteAnnouncement/{announcementId}', 'societyAdminController@deleteAnnouncement')->name('societyAdmin.deleteAnnouncement');
 });
 
 
 
 // |---------------------------------- student Routes ----------------------------------|
 Route::prefix('student')->group(function () {
-Route::get('/dashboard', 'studentController@index')->name('student.dashboard');
+Route::get('/dashboard', 'studentController@dashboard')->name('student.dashboard');
+Route::get('/departmentAnnouncements', 'studentController@departmentAnnouncements')->name('student.departmentAnnouncements');
+Route::get('/societyAnnouncements', 'studentController@societyAnnouncements')->name('student.societyAnnouncements');
 });
 
 

@@ -63,7 +63,7 @@
                         <!-- Profile -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+                            <div class="dropdown-menu dropdown-menu-right">
                                 <ul class="dropdown-user">
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
@@ -88,11 +88,14 @@
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">{{ Auth::user()->name }}</li>
-                        <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="text-primary fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Ecommerce </a></li>
-                                <li><a href="index1.html">Analytics </a></li>
-                            </ul>
+                        <li> 
+                            <a href="{{ route('student.dashboard') }}"><i class="text-primary fa fa-tachometer"></i>Dashboard</a>
+                        </li>
+                        <li> 
+                            <a href="{{ route('student.departmentAnnouncements') }}"><i class="text-danger fa fa-building-o"></i>Department Alerts</a>
+                        </li>
+                        <li> 
+                            <a href="{{ route('student.societyAnnouncements') }}"><i class="text-warning fa fa-cubes"></i>Society Alerts</a>
                         </li>
                     </ul>
                 </nav>
@@ -103,18 +106,8 @@
         <!-- End Left Sidebar  -->
         <!-- Page wrapper  -->
         <div class="page-wrapper">
-            <!-- Bread crumb -->
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">Dashboard</h3> </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div>
-            </div>
-            <!-- End Bread crumb -->
+            @include('includes.message')
+            @include('includes.error')
 
             @section('body')
                 

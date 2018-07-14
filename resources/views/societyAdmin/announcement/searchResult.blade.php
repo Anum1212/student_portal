@@ -1,4 +1,4 @@
-@extends('layouts.superAdminDashboard') @section('body')
+@extends('layouts.societyAdminDashboard') @section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->
@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form autocomplete="off" action="{{ route('superAdmin.searchSocietyAdmin') }}" method="get">
+                    <form autocomplete="off" action="{{ route('societyAdmin.searchAnnouncement') }}" method="get">
                         <div class="form-group">
                             <div class="input-group input-group-rounded">
                                 <input type="text" placeholder="Search" name="search" class="form-control">
@@ -23,23 +23,25 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($results as $results)
+                                @foreach ($announcements as $announcement)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $results->name }}</td>
+                                    <td>{{ $announcement->title }}</td>
+                                    <td>{{ $announcement->created_at->format('d/m/Y')}}</td>
                                     <td>
-                                        <a class="text-primary" href="{{ route('superAdmin.editSocietyAdminForm', ['societyAdminId'=>$results->id]) }}">
+                                        <a class="text-primary" href="{{ route('societyAdmin.editAnnouncementForm', ['id'=>$announcement->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('superAdmin.deleteSocietyAdmin', ['societyAdminId'=>$results->id]) }}" method="post">
+                                        <form action="{{ route('societyAdmin.deleteAnnouncement', ['id'=>$announcement->id]) }}" method="post">
                                             {{csrf_field()}} {{method_field('delete')}}
                                             <button type="submit" class="confirmAction btn-danger">Delete</button>
                                         </form>
@@ -53,7 +55,7 @@
             </div>
         </div>
     </div>
-    <!-- End PAge Content -->
+    <!-- End Page Content -->
 </div>
 <!-- End Container fluid  -->
 @endsection

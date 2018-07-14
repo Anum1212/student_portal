@@ -1,4 +1,4 @@
-@extends('layouts.superAdminDashboard')
+@extends('layouts.studentDashboard')
 
 @section('body')
                 <!-- Container fluid  -->

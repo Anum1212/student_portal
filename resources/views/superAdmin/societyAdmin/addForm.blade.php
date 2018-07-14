@@ -50,7 +50,7 @@
                         <div class="form-actions">
                             <div class="pull-right">
                                 <button type="submit" class="confirmAction btn btn-success">Submit</button>
-                                <a href="{{ route('superAdmin.viewAllDepartmentAdmins') }}" type="button" class="confirmAction btn btn-inverse">Cancel</a>
+                                <a href="{{ route('superAdmin.viewAllSocietyAdmins') }}" type="button" class="confirmAction btn btn-inverse">Cancel</a>
                             </div>
                         </div>
                     </form>

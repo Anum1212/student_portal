@@ -9,7 +9,7 @@
                     <form autocomplete="off" action="{{ route('superAdmin.searchDepartment') }}" method="get">
                         <div class="form-group">
                             <div class="input-group input-group-rounded">
-                                <input type="text" placeholder="Search Round" name="search" class="form-control">
+                                <input type="text" placeholder="Search" name="search" class="form-control">
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary btn-group-right" type="submit">
                                         <i class="fa fa-search"></i>
@@ -41,9 +41,9 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form style="margin-top:15px;" action="{{ route('superAdmin.deleteDepartment', ['id'=>$department->id]) }}" method="post">
+                                        <form action="{{ route('superAdmin.deleteDepartment', ['id'=>$department->id]) }}" method="post">
                                             {{csrf_field()}} {{method_field('delete')}}
-                                            <button type="submit" class="confirmAction btn-danger" disabled="disabled">Delete</button>
+                                            <button type="submit" class="confirmAction btn-danger">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -63,7 +63,7 @@
                         <!-- Profile -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
+                            <div class="dropdown-menu dropdown-menu-right">
                                 <ul class="dropdown-user">
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
@@ -88,7 +88,7 @@
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
                         <li class="nav-label">{{ Auth::user()->name }}</li>
-                        <li> <a href="#" aria-expanded="false"><i class="text-primary fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
+                        <li> <a href="{{ route('superAdmin.dashboard') }}"><i class="text-primary fa fa-tachometer"></i><span class="hide-menu">Dashboard</span></a>
                         </li>
                         <li> <a class="has-arrow" href="#" aria-expanded="false"><i class="text-danger fa fa-building-o" aria-hidden="true"></i><span class="hide-menu">Departments</span></a>
                             <ul aria-expanded="false" class="collapse">

@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form autocomplete="off" class="form-horizontal" action="{{ route('superAdmin.addDepartment') }}" method="post" autocomplete="off">
+                    <form autocomplete="off" class="form-horizontal" action="{{ route('superAdmin.addDepartment') }}" method="post">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <h3 class="box-title m-t-15">Add Department</h3>
@@ -28,7 +28,7 @@
                         <div class="form-actions">
                             <div class="pull-right">
                                 <button type="submit" class="confirmAction btn btn-success">Submit</button>
-                                <a href="{{ route('superAdmin.viewAllDepartmentAdmins') }}" type="button" class="confirmAction btn btn-inverse">Cancel</a>
+                                <a href="{{ route('superAdmin.viewAllDepartments') }}" type="button" class="confirmAction btn btn-inverse">Cancel</a>
                             </div>
                         </div>
                     </form>

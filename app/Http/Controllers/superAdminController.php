@@ -7,7 +7,7 @@
 // Methods Present
 // ------------------
 // 1) __construct
-// 2) index
+// 2) dashboard
 // 3) viewAllDepartments
 // 4) addDepartmentForm
 // 5) addDepartment
@@ -54,6 +54,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use File;
 use App\User;
 use App\Department;
 use App\DepartmentAnnouncement;
@@ -75,8 +77,8 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 2) index ----------------------------------|
-    public function index()
+    // |---------------------------------- 2) dashboard ----------------------------------|
+    public function dashboard()
     {
         return view('superAdmin.dashboard');
     }
@@ -86,7 +88,7 @@ class superAdminController extends Controller
     // |---------------------------------- 3) viewAllDepartments ----------------------------------|
     public function viewAllDepartments()
     {
-        $departments = Department::all();
+        $departments = Department::orderBy('created_at', 'DESC')->get();
         return view('superAdmin.department.viewAll', compact('departments'));
     }
 
@@ -107,7 +109,7 @@ class superAdminController extends Controller
         $department->departmentCode = $req->code;
         $department->departmentName = $req->name;
         $department->save();
-       return redirect()->route('superAdmin.viewAllDepartments');
+        return redirect()->route('superAdmin.viewAllDepartments');
     }
 
 
@@ -136,7 +138,10 @@ class superAdminController extends Controller
     // |---------------------------------- 8) searchDepartment ----------------------------------|
     public function searchDepartment(Request $req)
     {
-        $results = Department::where('departmentCode', 'LIKE', '%' . $req->search . '%')->orWhere('departmentName', 'LIKE', '%' . $req->search . '%')->get();
+        $results = Department::where('departmentCode', 'LIKE', '%' . $req->search . '%')
+            ->orWhere('departmentName', 'LIKE', '%' . $req->search . '%')
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return view('superAdmin.department.searchResult', compact('results'));
     }
 
@@ -145,7 +150,17 @@ class superAdminController extends Controller
     // |---------------------------------- 9) deleteDepartment ----------------------------------|
     public function deleteDepartment($departmentId)
     {
-        $details = Department::find($departmentId);
+        $department = Department::find($departmentId);
+        $departmentMembers = User::where('department_id', $departmentId);
+        $departmentAnnouncements = DepartmentAnnouncement::where('department_id', $departmentId);
+        $departmentAnnouncementFiles = DepartmentAnnouncement::where([['department_id', $departmentId], ['file', '!=', null]])->get();
+        foreach ($departmentAnnouncementFiles as $departmentAnnouncementFile) {
+            if (File::exists('storage/departmentAnnouncements/' . $departmentAnnouncementFile->file))
+                Storage::delete('public/departmentAnnouncements/' . $departmentAnnouncementFile->file);
+        }
+        $department->delete();
+        $departmentMembers->delete();
+        $departmentAnnouncements->delete();
         return redirect()->route('superAdmin.viewAllDepartments');
     }
 
@@ -154,7 +169,7 @@ class superAdminController extends Controller
     // |---------------------------------- 10) viewAllDepartmentAdmins ----------------------------------|
     public function viewAllDepartmentAdmins()
     {
-        $departmentAdmins = User::where('userType', '1')->get();
+        $departmentAdmins = User::where('userType', '1')->orderBy('created_at', 'DESC')->get();
         return view('superAdmin.departmentAdmin.viewAll', compact('departmentAdmins'));
     }
 
@@ -163,7 +178,6 @@ class superAdminController extends Controller
     // |---------------------------------- 11) addDepartmentAdminForm ----------------------------------|
     public function addDepartmentAdminForm()
     {
-        $departments = Department::all();
         return view('superAdmin.departmentAdmin.addForm', compact('departments'));
     }
 
@@ -202,19 +216,19 @@ class superAdminController extends Controller
 
         // check if field email is different than admin email
         // if email is different check if it matches some other db email.
-        if($req->email!= $admin->email){
+        if ($req->email != $admin->email) {
             // Get the value from the form
-        $input['email'] = Input::get('email');
+            $input['email'] = Input::get('email');
 
         // Must not already exist in the `email` column of `users` table
-        $rules = array('email' => 'unique:users,email');
+            $rules = array('email' => 'unique:users,email');
 
-        $validator = Validator::make($input, $rules);
+            $validator = Validator::make($input, $rules);
         // if it matches some existing email return back with error
-        if ($validator->fails()) {
-            return redirect()->back()->with('error', 'Entered Email already Exists');
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Entered Email already Exists');
+            }
         }
-    }
     // if admin email unchanged or unique simply save record
         $admin->name = $req->name;
         $admin->email = $req->email;
@@ -233,6 +247,7 @@ class superAdminController extends Controller
         $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
             ->orWhere([['email', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
             ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'], ['userType', '1']])
+            ->orderBy('created_at', 'DESC')
             ->get();
         return view('superAdmin.departmentAdmin.searchResult', compact('results'));
     }
@@ -242,7 +257,8 @@ class superAdminController extends Controller
     // |---------------------------------- 16) deleteDepartmentAdmin ----------------------------------|
     public function deleteDepartmentAdmin($departmentAdminId)
     {
-        $details = User::find($departmentAdminId);
+        $admin = User::find($departmentAdminId);
+        $admin->delete();
         return redirect()->route('superAdmin.viewAllDepartmentAdmins');
     }
 
@@ -251,7 +267,7 @@ class superAdminController extends Controller
     // |---------------------------------- 17) viewAllSocieties ----------------------------------|
     public function viewAllSocieties()
     {
-        $societies = Society::all();
+        $societies = Society::orderBy('created_at', 'DESC')->get();
         return view('superAdmin.society.viewAll', compact('societies'));
     }
 
@@ -301,7 +317,10 @@ class superAdminController extends Controller
     // |---------------------------------- 22) searchSociety ----------------------------------|
     public function searchSociety(Request $req)
     {
-        $results = Society::where('societyCode', 'LIKE', '%' . $req->search . '%')->orWhere('societyName', 'LIKE', '%' . $req->search . '%')->get();
+        $results = Society::where('societyCode', 'LIKE', '%' . $req->search . '%')
+            ->orWhere('societyName', 'LIKE', '%' . $req->search . '%')
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return view('superAdmin.society.searchResult', compact('results'));
     }
 
@@ -310,7 +329,31 @@ class superAdminController extends Controller
     // |---------------------------------- 23) deleteSociety ----------------------------------|
     public function deleteSociety($societyId)
     {
-        $details = Society::find($societyId);
+        $society = Society::find($societyId);
+        foreach ($society->users as $societyMember) {
+            if ($societyMember->userType == '2')
+                $societyAdminIds[] = $societyMember->id;
+        }
+
+        // deleting society admin(s) from user table
+        for ($i = 0; $i < count($societyAdminIds); $i++) {
+            User::destroy($societyAdminIds[$i]);
+        }
+
+        // deleting relations from society_user table
+        for ($i = 0; $i < count($society->users); $i++) {
+            $societyUser = Society_User::where([['user_id', $society->users[$i]->id], ['society_id', $societyId]]);
+            $societyUser->delete();
+        }
+
+        $societyAnnouncements = SocietyAnnouncement::where('society_id', $societyId);
+        $societyAnnouncementFiles = SocietyAnnouncement::where([['society_id', $societyId], ['file', '!=', null]])->get();
+        foreach ($societyAnnouncementFiles as $societyAnnouncementFile) {
+            if (File::exists('storage/societyAnnouncements/' . $societyAnnouncementFile->file))
+                Storage::delete('public/societyAnnouncements/' . $societyAnnouncementFile->file);
+        }
+        $society->delete();
+        $societyAnnouncements->delete();
         return redirect()->route('superAdmin.viewAllSocieties');
     }
 
@@ -319,7 +362,7 @@ class superAdminController extends Controller
     // |---------------------------------- 24) viewAllSocietyAdmins ----------------------------------|
     public function viewAllSocietyAdmins()
     {
-        $societyAdmins = User::where('userType','2')->get();
+        $societyAdmins = User::where('userType', '2')->orderBy('created_at', 'DESC')->get();
         return view('superAdmin.societyAdmin.viewAll', compact('societyAdmins'));
     }
 
@@ -411,9 +454,10 @@ class superAdminController extends Controller
     // |---------------------------------- 29) searchSocietyAdmin ----------------------------------|
     public function searchSocietyAdmin(Request $req)
     {
-        $results = User::where([['name', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
-            ->orWhere([['email', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
-            ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'],['userType', '2']])
+        $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '2']])
+            ->orWhere([['email', 'LIKE', '%' . $req->search . '%'], ['userType', '2']])
+            ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'], ['userType', '2']])
+            ->orderBy('created_at', 'DESC')
             ->get();
         return view('superAdmin.societyAdmin.searchResult', compact('results'));
     }
@@ -423,7 +467,8 @@ class superAdminController extends Controller
     // |---------------------------------- 30) deleteSocietyAdmin ----------------------------------|
     public function deleteSocietyAdmin($societyAdminId)
     {
-        $details = User::find($societyAdminId);
+        $admin = User::find($societyAdminId);
+        $admin->delete();
         return redirect()->route('superAdmin.viewAllSocietyAdmins');
     }
 
@@ -432,7 +477,7 @@ class superAdminController extends Controller
     // |---------------------------------- 31) viewAllStudents ----------------------------------|
     public function viewAllStudents()
     {
-        $students = User::where('userType', '3')->get();
+        $students = User::where('userType', '3')->orderBy('created_at', 'DESC')->get();
         return view('superAdmin.student.viewAll', compact('students'));
     }
 
@@ -511,6 +556,7 @@ class superAdminController extends Controller
         $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
             ->orWhere([['email', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
             ->orWhere([['registration', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
+            ->orderBy('created_at', 'DESC')
             ->get();
         return view('superAdmin.student.searchResult', compact('results'));
     }
@@ -520,7 +566,8 @@ class superAdminController extends Controller
     // |---------------------------------- 37) deleteStudent ----------------------------------|
     public function deleteStudent($studentId)
     {
-        $details = User::find($studentId);
+        $student = User::find($studentId);
+        $student->delete();
         return redirect()->route('superAdmin.viewAllStudents');
     }
 }
