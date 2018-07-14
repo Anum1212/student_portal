@@ -87,6 +87,8 @@ class studentController extends Controller
     // |---------------------------------- 5) manageSocietiesForm ----------------------------------|
     public function manageSocietiesForm()
     {
+        $societyNotificationStatus = Notification::where('user_id', Auth::user()->id)->get();
+
         // get student registered society ids
         for ($i = 0; $i < count(Auth::user()->society); $i++)
         $studentRegisteredSocietyIds[] = Auth::user()->society[$i]->id;
@@ -100,18 +102,15 @@ class studentController extends Controller
 
         // remake array to fix missing indexes problem
         $studentUnRegisteredSocietyIds = array_values($studentUnRegisteredSocietyIds);
+        
+        // if there are no unregistered societies
         if (empty($studentUnRegisteredSocietyIds))
-            return view('student.society.manageSocieties');
+            return view('student.society.manageSocieties', compact('societyNotificationStatus'));
+            
         else{
         // get details of studentUnRegisteredSocieties
         for ($i = 0; $i < count($studentUnRegisteredSocietyIds); $i++)
         $studentUnRegisteredSocieties[] = Society::whereId($studentUnRegisteredSocietyIds[$i])->first();
-
-        $societyNotificationStatus = Notification::where('user_id', Auth::user()->id)->get();
-        //     foreach (Auth::user()->society as $society)
-        //     if (count($societyNotificationStatus) < count(Auth::user()->society))
-        // dd($societyNotificationStatus);
-        // echo $societyNotificationStatus[1];
 
         return view('student.society.manageSocieties', compact('studentUnRegisteredSocieties', 'societyNotificationStatus'));
     }
