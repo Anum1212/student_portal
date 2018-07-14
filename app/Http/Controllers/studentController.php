@@ -6,12 +6,14 @@
 // ------------------
 // Methods Present
 // ------------------
-// 1) __construct
+// 1) construct
 // 2) dashboard
 // 3) departmentAnnouncements
 // 4) societyAnnouncements
-// 5) manageSocietiesForm
-// 6) manageSocietyNotifications
+// 5) manageSocieties
+// 6) addSociety
+// 7) manageSocietyNotifications
+// 8) deleteSociety
 
 
 
@@ -84,8 +86,8 @@ class studentController extends Controller
     
     
     
-    // |---------------------------------- 5) manageSocietiesForm ----------------------------------|
-    public function manageSocietiesForm()
+    // |---------------------------------- 5) manageSocieties ----------------------------------|
+    public function manageSocieties()
     {
         $societyNotificationStatus = Notification::where('user_id', Auth::user()->id)->get();
 
@@ -106,7 +108,7 @@ class studentController extends Controller
         // if there are no unregistered societies
         if (empty($studentUnRegisteredSocietyIds))
             return view('student.society.manageSocieties', compact('societyNotificationStatus'));
-            
+
         else{
         // get details of studentUnRegisteredSocieties
         for ($i = 0; $i < count($studentUnRegisteredSocietyIds); $i++)

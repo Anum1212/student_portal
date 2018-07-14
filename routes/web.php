@@ -100,7 +100,7 @@ Route::prefix('student')->group(function () {
 Route::get('/dashboard', 'studentController@dashboard')->name('student.dashboard');
 Route::get('/departmentAnnouncements', 'studentController@departmentAnnouncements')->name('student.departmentAnnouncements');
 Route::get('/societyAnnouncements', 'studentController@societyAnnouncements')->name('student.societyAnnouncements');
-Route::get('/manageSocietiesForm', 'studentController@manageSocietiesForm')->name('student.manageSocietiesForm');
+Route::get('/manageSocieties', 'studentController@manageSocieties')->name('student.manageSocieties');
 Route::get('/addSociety', 'studentController@addSociety')->name('student.addSociety');
 Route::get('/manageSocietyNotifications/{societyId}', 'studentController@manageSocietyNotifications')->name('student.manageSocietyNotifications');
 Route::get('/deleteSociety/{societyId}', 'studentController@deleteSociety')->name('student.deleteSociety');
