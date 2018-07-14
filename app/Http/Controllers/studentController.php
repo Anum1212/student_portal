@@ -8,12 +8,16 @@
 // ------------------
 // 1) __construct
 // 2) dashboard
-
+// 3) departmentAnnouncements
+// 4) societyAnnouncements
+// 5) manageSocietiesForm
+// 6) manageSocietyNotifications
 
 
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Auth;
@@ -23,6 +27,7 @@ use App\DepartmentAnnouncement;
 use App\Society;
 use App\SocietyAnnouncement;
 use App\Society_User;
+use App\Notification;
 
 class studentController extends Controller
 {
@@ -45,7 +50,7 @@ class studentController extends Controller
 
 
 
-    // |---------------------------------- 2) departmentAlerts ----------------------------------|
+    // |---------------------------------- 3) departmentAnnouncements ----------------------------------|
     public function departmentAnnouncements()
     {
         $departmentAnnouncements = DepartmentAnnouncement::where('department_id', Auth::user()->department_id)
@@ -56,7 +61,7 @@ class studentController extends Controller
     
     
     
-    // |---------------------------------- 2) societyAlerts ----------------------------------|
+    // |---------------------------------- 4) societyAnnouncements ----------------------------------|
     public function societyAnnouncements()
     {
         for ($i = 0; $i < count(Auth::user()->society); $i++)
@@ -65,7 +70,7 @@ class studentController extends Controller
             ->get();
             
             // ********** critical step **********
-            // $websiteProducts is an array of collections
+            // $societyAnnouncementsCollection is an array of collections
             // in the code below we combine the collections into 1 collection
             $societyAnnouncements = new Collection();
             foreach ($societyAnnouncementsCollection as $collection) {
@@ -75,5 +80,74 @@ class studentController extends Controller
             }
 
         return view('student.society.viewAll', compact('societyAnnouncements'));
+    }
+    
+    
+    
+    // |---------------------------------- 5) manageSocietiesForm ----------------------------------|
+    public function manageSocietiesForm()
+    {
+        // get student registered society ids
+        for ($i = 0; $i < count(Auth::user()->society); $i++)
+        $studentRegisteredSocietyIds[] = Auth::user()->society[$i]->id;
+        // get all society ids
+        $societies = Society::all();
+        for ($i = 0; $i < count($societies); $i++)
+        $studentUnRegisteredSocietyIds[] = $societies[$i]->id;
+        
+        // intersect studentRegisteredSocietyIds and studentUnRegisteredSocietyIds to get ids of society's that student has not registered in
+        $studentUnRegisteredSocietyIds = array_diff($studentUnRegisteredSocietyIds, $studentRegisteredSocietyIds);
+
+        // remake array to fix missing indexes problem
+        $studentUnRegisteredSocietyIds = array_values($studentUnRegisteredSocietyIds);
+        if (empty($studentUnRegisteredSocietyIds))
+            return view('student.society.manageSocieties');
+        else{
+        // get details of studentUnRegisteredSocieties
+        for ($i = 0; $i < count($studentUnRegisteredSocietyIds); $i++)
+        $studentUnRegisteredSocieties[] = Society::whereId($studentUnRegisteredSocietyIds[$i])->first();
+
+        $societyNotificationStatus = Notification::where('user_id', Auth::user()->id)->get();
+        //     foreach (Auth::user()->society as $society)
+        //     if (count($societyNotificationStatus) < count(Auth::user()->society))
+        // dd($societyNotificationStatus);
+        // echo $societyNotificationStatus[1];
+
+        return view('student.society.manageSocieties', compact('studentUnRegisteredSocieties', 'societyNotificationStatus'));
+    }
+    }
+    
+    
+    
+    // |---------------------------------- 6) addSociety ----------------------------------|
+    public function addSociety(Request $req)
+    {
+        $registerSociety = new Society_User;
+        $registerSociety->user_id = Auth::user()->id;
+        $registerSociety->society_id = $req->studentUnRegisteredSociety;
+        $registerSociety->save();
+        return redirect()->route('student.manageSocietiesForm');
+    }
+    
+    
+    
+    // |---------------------------------- 7) manageSocietyNotifications ----------------------------------|
+    public function manageSocietyNotifications($societyId)
+    {
+        $notification = Notification::firstOrCreate(array('user_id'=>Auth::user()->id, 'society_id'=>$societyId));
+        if (!$notification->wasRecentlyCreated) {
+            $notification->delete();
+        }
+        return redirect()->route('student.manageSocietiesForm');
+    }
+    
+    
+    
+    // |---------------------------------- 8) deleteSociety ----------------------------------|
+    public function deleteSociety($societyId)
+    {
+        $society = Society_User::where([['user_id', Auth::user()->id], ['society_id', $societyId]]);
+        $society->delete();
+        return redirect()->route('student.manageSocietiesForm');
     }
 }
