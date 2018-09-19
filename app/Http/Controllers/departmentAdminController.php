@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Carbon\carbon;
 use File;
 use Auth;
 use App\DepartmentAnnouncement;
@@ -46,7 +47,11 @@ class departmentAdminController extends Controller
     // |---------------------------------- 2) dashboard ----------------------------------|
     public function dashboard()
     {
-        return view('departmentAdmin.dashboard');
+        $departmentAnnouncements = DepartmentAnnouncement::where([
+            ['department_id', Auth::user()->department_id],
+            ['created_at', '>=', Carbon::now()->subDays(1)]
+        ])->count();
+        return view('departmentAdmin.dashboard', compact('departmentAnnouncements'));
     }
 
 

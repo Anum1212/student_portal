@@ -13,15 +13,6 @@
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="/themeAssets/ezuca/css/font-awesome.min.css">
 
-    <!-- ElegantFonts CSS -->
-    <link rel="stylesheet" href="/themeAssets/ezuca/css/elegant-fonts.css">
-
-    <!-- themify-icons CSS -->
-    <link rel="stylesheet" href="/themeAssets/ezuca/css/themify-icons.css">
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="/themeAssets/ezuca/css/swiper.min.css">
-
     <!-- Styles -->
     <link rel="stylesheet" href="/themeAssets/ezuca/style.css">
     <style id="__web-inspector-hide-shortcut-style__" type="text/css">
@@ -50,7 +41,7 @@
                     <div class="row">
                         <div class="col-9 col-lg-3">
                             <div class="site-branding">
-                                <h1 class="site-title"><a href="index.html" rel="home">University Of<span> Lahore</span></a></h1>
+                                <h1 class="site-title"><a href="/" rel="home">University Of<span> Lahore</span></a></h1>
                             </div>
                             <!-- .site-branding -->
                         </div>
@@ -88,7 +79,7 @@
     <!-- .hero-content -->
 
     <div class="icon-boxes">
-        <div class="col-6 offset-lg-3">
+        <div class="col-12 offset-lg-3 col-md-6">
             <div class="contact-form">
                 <h3>Login</h3>
                 @if (session('status'))
@@ -206,12 +197,6 @@
     <!-- .clients-logo -->
 
     <!-- .site-footer -->
-
-    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.js"></script>
-    <script type="text/javascript" src="/themeAssets/ezuca/js/swiper.min.js"></script>
-    <script type="text/javascript" src="/themeAssets/ezuca/js/masonry.pkgd.min.js"></script>
-    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.collapsible.min.js"></script>
-    <script type="text/javascript" src="/themeAssets/ezuca/js/custom.js"></script>
 
 
 </body>

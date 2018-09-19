@@ -4,10 +4,10 @@
     <!-- Start Page Content -->
     <div class="row">
         <div class="col-12">
+            @foreach(Auth::user()->society as $society)
             <div class="card">
                 <div class="card-body">
 
-                    @foreach(Auth::user()->society as $society)
                     <p>
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#society{{ $society->id }}"
                             aria-expanded="false" aria-controls="society{{ $society->id }}">
@@ -29,7 +29,7 @@
                             @if($societyAnnouncement->description=="")
                             No description
                             @else
-                            {!! htmlspecialchars_decode($societyAnnouncement->description) !!} 
+                            {!! htmlspecialchars_decode($societyAnnouncement->description) !!}
                             @endif
                             @if($societyAnnouncement->file !=null)
                             <div class="text-center bg-light">
@@ -42,10 +42,10 @@
                     @endforeach
                 </div>
             </div>
-            @endforeach
 
-            </div>
         </div>
+    </div>
+    @endforeach
     </div>
     <!-- End PAge Content -->
 </div>

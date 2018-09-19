@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Carbon\carbon;
 use File;
 use Auth;
 use App\Society;
@@ -47,7 +48,12 @@ class societyAdminController extends Controller
     // |---------------------------------- 2) dashboard ----------------------------------|
     public function dashboard()
     {
-        return view('societyAdmin.dashboard');
+        $societyAnnouncements = SocietyAnnouncement::where([
+            ['society_id', Auth::user()->society[0]->id],
+            ['created_at', '>=', Carbon::now()->subDays(1)]
+        ])->count();
+
+        return view('societyAdmin.dashboard', compact('societyAnnouncements'));
     }
 
 

@@ -29,7 +29,7 @@
                                                     <td>
                                                         {{ $i+1 }}
                                                     </td>
-                                                    <td>{{ $department->departmentName }}</td>
+                                                    <td><a class="text-primary" href="{{ route('superAdmin.viewAllDepartmentAnnouncements', ['id'=>$department->id]) }}"> {{ $department->departmentName }} </a></td>
                                                     <td><span class="badge badge-success">{{ $departmentAnnouncements[$i] }}</span></td>
                                                 </tr>
                                                 <?php $i++; ?>
@@ -40,6 +40,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="card">
                                 <div class="card-title">
                                     <h4 class="text-warning">Recent Society Announcements </h4>
@@ -56,14 +57,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
+                                                <?php $i=0; ?>
                                                 @foreach($societies as $society)
                                                 @if ($societyAnnouncements[$i]>0)
 
-                                                <?php $i=0; ?>
                                                 <td>
                                                     {{ $i+1 }}
                                                 </td>
-                                                <td>{{ $society->societyName }}</td>
+                                                <td><a class="text-primary" href="{{ route('superAdmin.viewAllSocietyAnnouncements', ['id'=>$society->id]) }}"> {{ $society->societyName }} </a></td>
                                                 <td><span class="badge badge-success">{{ $societyAnnouncements[$i] }}</span></td>
                                             </tr>
                                             <?php $i++; ?>
@@ -74,6 +75,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                 <!-- End PAge Content -->
