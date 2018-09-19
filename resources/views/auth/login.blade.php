@@ -1,76 +1,219 @@
-@extends('layouts.app')
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<head>
+    <title>Student Portal</title>
 
-                <div class="card-body">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-                    @if (session('status'))
-    <div class="alert alert-danger">
-        {{ session('status') }}
-    </div>
-@endif
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/bootstrap.min.css">
 
-                    <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                        @csrf
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/font-awesome.min.css">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/elegant-fonts.css">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/themify-icons.css">
 
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/swiper.min.css">
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+    <!-- Styles -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/style.css">
+    <style id="__web-inspector-hide-shortcut-style__" type="text/css">
+        .__web-inspector-hide-shortcut__,
+        .__web-inspector-hide-shortcut__ *,
+        .__web-inspector-hidebefore-shortcut__::before,
+        .__web-inspector-hideafter-shortcut__::after {
+            visibility: hidden !important;
+        }
+    </style>
+</head>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+<body>
+    <div class="hero-content">
+        <header class="site-header">
+            <div class="top-header-bar">
+                <div class="container-fluid">
+                    <!-- .row -->
                 </div>
+                <!-- .container-fluid -->
             </div>
+            <!-- .top-header-bar -->
+
+            <div class="nav-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="index.html" rel="home">University Of<span> Lahore</span></a></h1>
+                            </div>
+                            <!-- .site-branding -->
+                        </div>
+                        <!-- .col -->
+                    </div>
+                    <!-- .row -->
+                </div>
+                <!-- .container -->
+            </div>
+            <!-- .nav-bar -->
+        </header>
+        <!-- .site-header -->
+
+        <div class="hero-content-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
+                            <header class="entry-header">
+                                <h1>University Of Lahore<br>Student Management Portal</h1>
+                            </header>
+                            <!-- .entry-header -->
+
+                        </div>
+                        <!-- .hero-content-wrap -->
+                    </div>
+                    <!-- .col -->
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .container -->
+        </div>
+        <!-- .hero-content-hero-content-overlay -->
+    </div>
+    <!-- .hero-content -->
+
+    <div class="icon-boxes">
+        <div class="col-6 offset-lg-3">
+            <div class="contact-form">
+                <h3>Login</h3>
+                @if (session('status'))
+                <div class="alert alert-danger">
+                    {{ session('status') }}
+                </div>
+                @endif
+                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}"> @csrf
+                    <input type="email" placeholder="Your Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+                        value="{{ old('email') }}" required>
+                    <input type="password" placeholder="Your Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+                        required>
+                    <br>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                        </label>
+                    </div>
+                    <input type="submit" value="Login">
+                    <div>
+                        <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }} </a>
+                    </div>
+                </form>
+            </div>
+            <!-- .contact-form -->
         </div>
     </div>
-</div>
-@endsection
+
+    <div class="clients-logo">
+        <div class="container">
+            <!-- .row -->
+            <footer class="site-footer">
+                <div class="footer-widgets">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                <div class="foot-contact">
+                                    <h2>Contact Us</h2>
+
+                                    <ul>
+                                        <li>Email: info@uol.edu.pk</li>
+                                        <li>Phone: +92 42 111-865-865</li>
+                                        <li>Address: 1-km, bhobatian chowk، Defence Road, Lahore, Punjab, Pakistan</li>
+                                    </ul>
+                                </div>
+                                <!-- .foot-contact -->
+                            </div>
+                            <!-- .col -->
+
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                                <div class="follow-us">
+                                    <h2>Follow Us</h2>
+
+                                    <ul class="follow-us flex flex-wrap align-items-center">
+                                        <li><a href="https://www.facebook.com/University.Lahore"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="https://plus.google.com/u/0/+universityoflahore"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="https://twitter.com/ULahore"><i class="fa fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- .quick-links -->
+                            </div>
+                            <!-- .col -->
+                        </div>
+                        <!-- .row -->
+                    </div>
+                    <!-- .container -->
+                </div>
+                <!-- .footer-widgets -->
+
+                <div class="footer-bar">
+                    <div class="container">
+                        <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-center">
+                            <div class="col-12 col-lg-6">
+                                <div class="download-apps flex flex-wrap justify-content-center justify-content-lg-start align-items-center">
+                                    <b>
+                                                <a class="text-success" href="https://github.com/Anum1212/student_portal">GitHub Link to code</a>
+                                            </b>
+                                    <br>
+                                    <b>anamamer0@gmail.com</b>
+                                </div>
+                                <!-- .download-apps -->
+
+                            </div>
+
+                            <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+                                <div class="footer-bar-nav">
+                                    <ul class="flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                                        <b class="text-success">built using</b>
+                                        <li>Laravel</li>
+                                        <li>ElaAdmin Template</li>
+                                        <li>Ezuca Template</li>
+                                        <li>Bootstrap 4</li>
+                                        <li>Jquery</li>
+                                    </ul>
+
+                                </div>
+                                <!-- .footer-bar-nav -->
+                            </div>
+                            <!-- .col-12 -->
+                        </div>
+                        <!-- .row -->
+                    </div>
+                    <!-- .container -->
+                </div>
+                <!-- .footer-bar -->
+            </footer>
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .clients-logo -->
+
+    <!-- .site-footer -->
+
+    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/custom.js"></script>
+
+
+</body>
+
+</html>

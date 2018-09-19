@@ -20,7 +20,7 @@
                             @if($departmentAnnouncement->description=="")
                             No description
                             @else
-                            {!! htmlspecialchars_decode($departmentAnnouncement->description) !!} 
+                            {!! htmlspecialchars_decode($departmentAnnouncement->description) !!}
                             @endif
                             @if($departmentAnnouncement->file !=null)
                             <div class="text-center bg-light">

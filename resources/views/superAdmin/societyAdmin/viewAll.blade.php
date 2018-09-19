@@ -24,6 +24,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
+                                    <th>Society</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -33,6 +34,8 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $societyAdmin->name }}</td>
+                                    <td>{{ $societyAdmin->society[0]->societyCode .' '. $societyAdmin->society[0]->societyName }}
+                                    </td>
                                     <td>
                                         <a class="text-primary" href="{{ route('superAdmin.editSocietyAdminForm', ['id'=>$societyAdmin->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>

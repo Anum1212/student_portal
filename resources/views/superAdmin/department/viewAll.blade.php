@@ -25,6 +25,7 @@
                                     <th>#</th>
                                     <th>Code</th>
                                     <th>Name</th>
+                                    <th>View</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -35,6 +36,11 @@
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $department->departmentCode }}</td>
                                     <td>{{ $department->departmentName }}</td>
+                                    <td>
+                                        <a class="text-primary" href="{{ route('superAdmin.viewAllDepartmentAnnouncements', ['id'=>$department->id]) }}">
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="text-primary" href="{{ route('superAdmin.editDepartmentForm', ['id'=>$department->id]) }}">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>

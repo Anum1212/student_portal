@@ -10,12 +10,12 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    <title>Ela - Bootstrap Admin Dashboard Template</title>
+    <title>{{ Auth::user()->name. '- Admin' }}</title>
     <!-- Bootstrap Core CSS -->
-    <link href="/themeAssets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themeAssets/elaAdmin/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="/themeAssets/css/helper.css" rel="stylesheet">
-    <link href="/themeAssets/css/style.css" rel="stylesheet">
+    <link href="/themeAssets/elaAdmin/css/helper.css" rel="stylesheet">
+    <link href="/themeAssets/elaAdmin/css/style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -44,10 +44,10 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon -->
-                        <b><img src="/themeAssets/images/logo.png" alt="homepage" class="dark-logo" /></b>
+                        <b><img src="/themeAssets/elaAdmin/images/logo.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span><img src="/themeAssets/images/logo-text.png" alt="homepage" class="dark-logo" /></span>
+                        <span><img src="/themeAssets/elaAdmin/images/logo-text.png" alt="homepage" class="dark-logo" /></span>
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -133,7 +133,7 @@
             @include('includes.error')
 
             @section('body')
-                
+
             @show
 
             <!-- footer -->
@@ -144,22 +144,22 @@
     </div>
     <!-- End Wrapper -->
     <!-- All Jquery -->
-    <script src="/themeAssets/js/jquery.min.js"></script>
+    <script src="/themeAssets/elaAdmin/js/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="/themeAssets/js/popper.min.js"></script>
-    <script src="/themeAssets/js/bootstrap.min.js"></script>
+    <script src="/themeAssets/elaAdmin/js/popper.min.js"></script>
+    <script src="/themeAssets/elaAdmin/js/bootstrap.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="/themeAssets/js/jquery.slimscroll.js"></script>
+    <script src="/themeAssets/elaAdmin/js/jquery.slimscroll.js"></script>
     <!--Menu sidebar -->
-    <script src="/themeAssets/js/sidebarmenu.js"></script>
+    <script src="/themeAssets/elaAdmin/js/sidebarmenu.js"></script>
     <!--stickey kit -->
-    <script src="/themeAssets/js/sticky-kit.min.js"></script>
+    <script src="/themeAssets/elaAdmin/js/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
-    <script src="/themeAssets/js/custom.min.js"></script>
+    <script src="/themeAssets/elaAdmin/js/custom.min.js"></script>
     {{-- confirm action script --}}
     <script src="/js/confirm.js"></script>
 @section('script')
-    
+
 @show
 </body>
 

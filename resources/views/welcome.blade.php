@@ -1,103 +1,219 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 
-        <title>Laravel</title>
+<head>
+    <title>Student Portal</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/bootstrap.min.css">
 
-            .full-height {
-                height: 100vh;
-            }
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/font-awesome.min.css">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/elegant-fonts.css">
 
-            .position-ref {
-                position: relative;
-            }
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/themify-icons.css">
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/css/swiper.min.css">
 
-            .content {
-                text-align: center;
-            }
+    <!-- Styles -->
+    <link rel="stylesheet" href="/themeAssets/ezuca/style.css">
+    <style id="__web-inspector-hide-shortcut-style__" type="text/css">
+        .__web-inspector-hide-shortcut__,
+        .__web-inspector-hide-shortcut__ *,
+        .__web-inspector-hidebefore-shortcut__::before,
+        .__web-inspector-hideafter-shortcut__::after {
+            visibility: hidden !important;
+        }
+    </style>
+</head>
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                    @if(Auth::user()->userType=='0')
-                        <a href="{{ url('/superadmin/dashboard') }}">Home</a>
-                    @elseif(Auth::user()->userType=='1')
-                            <a href="{{ url('/departmentadmin/dashboard') }}">Home</a>
-                    @elseif(Auth::user()->userType=='2')
-                            <a href="{{ url('/societyadmin/dashboard') }}">Home</a>
-                    @elseif(Auth::user()->userType=='3')
-                            <a href="{{ url('/student/dashboard') }}">Home</a>
-                    @endif
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+<body>
+    <div class="hero-content">
+        <header class="site-header">
+            <div class="top-header-bar">
+                <div class="container-fluid">
+                    <!-- .row -->
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                <!-- .container-fluid -->
             </div>
+            <!-- .top-header-bar -->
+
+            <div class="nav-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-9 col-lg-3">
+                            <div class="site-branding">
+                                <h1 class="site-title"><a href="index.html" rel="home">University Of<span> Lahore</span></a></h1>
+                            </div>
+                            <!-- .site-branding -->
+                        </div>
+                        <!-- .col -->
+                    </div>
+                    <!-- .row -->
+                </div>
+                <!-- .container -->
+            </div>
+            <!-- .nav-bar -->
+        </header>
+        <!-- .site-header -->
+
+        <div class="hero-content-overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
+                            <header class="entry-header">
+                                <h1>University Of Lahore<br>Student Management Portal</h1>
+                            </header>
+                            <!-- .entry-header -->
+
+                        </div>
+                        <!-- .hero-content-wrap -->
+                    </div>
+                    <!-- .col -->
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .container -->
         </div>
-    </body>
+        <!-- .hero-content-hero-content-overlay -->
+    </div>
+    <!-- .hero-content -->
+
+    <div class="icon-boxes">
+        <div class="col-6 offset-lg-3">
+            <div class="contact-form">
+                <h3>Login</h3>
+@if (session('status'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+        @endif
+                <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}"> @csrf
+                    <input type="email" placeholder="Your Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+                        value="{{ old('email') }}" required>
+                    <input type="password" placeholder="Your Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"
+                        required>
+                        <br>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+                        </label>
+                    </div>
+                    <input type="submit" value="Login">
+                    <div>
+                        <a href="{{ route('password.request') }}"> {{ __('Forgot Your Password?') }} </a>
+                    </div>
+                </form>
+            </div>
+            <!-- .contact-form -->
+        </div>
+    </div>
+
+    <div class="clients-logo">
+        <div class="container">
+            <!-- .row -->
+            <footer class="site-footer">
+                <div class="footer-widgets">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                                <div class="foot-contact">
+                                    <h2>Contact Us</h2>
+
+                                    <ul>
+                                        <li>Email: info@uol.edu.pk</li>
+                                        <li>Phone: +92 42 111-865-865</li>
+                                        <li>Address: 1-km, bhobatian chowk، Defence Road, Lahore, Punjab, Pakistan</li>
+                                    </ul>
+                                </div>
+                                <!-- .foot-contact -->
+                            </div>
+                            <!-- .col -->
+
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-lg-0">
+                                <div class="follow-us">
+                                    <h2>Follow Us</h2>
+
+                                    <ul class="follow-us flex flex-wrap align-items-center">
+                                        <li><a href="https://www.facebook.com/University.Lahore"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="https://plus.google.com/u/0/+universityoflahore"><i class="fa fa-google-plus"></i></a></li>
+                                        <li><a href="https://twitter.com/ULahore"><i class="fa fa-twitter"></i></a></li>
+                                    </ul>
+                                </div>
+                                <!-- .quick-links -->
+                            </div>
+                            <!-- .col -->
+                        </div>
+                        <!-- .row -->
+                    </div>
+                    <!-- .container -->
+                </div>
+                <!-- .footer-widgets -->
+
+                <div class="footer-bar">
+                    <div class="container">
+                        <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-center">
+                            <div class="col-12 col-lg-6">
+                                <div class="download-apps flex flex-wrap justify-content-center justify-content-lg-start align-items-center">
+                                    <b>
+                                                <a class="text-success" href="https://github.com/Anum1212/student_portal">GitHub Link to code</a>
+                                            </b>
+                                    <br>
+                                    <b>anamamer0@gmail.com</b>
+                                </div>
+                                <!-- .download-apps -->
+
+                            </div>
+
+                            <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+                                <div class="footer-bar-nav">
+                                    <ul class="flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                                        <b class="text-success">built using</b>
+                                        <li>Laravel</li>
+                                        <li>ElaAdmin Template</li>
+                                        <li>Ezuca Template</li>
+                                        <li>Bootstrap 4</li>
+                                        <li>Jquery</li>
+                                    </ul>
+
+                                </div>
+                                <!-- .footer-bar-nav -->
+                            </div>
+                            <!-- .col-12 -->
+                        </div>
+                        <!-- .row -->
+                    </div>
+                    <!-- .container -->
+                </div>
+                <!-- .footer-bar -->
+            </footer>
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .clients-logo -->
+
+    <!-- .site-footer -->
+
+    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/masonry.pkgd.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/jquery.collapsible.min.js"></script>
+    <script type="text/javascript" src="/themeAssets/ezuca/js/custom.js"></script>
+
+
+</body>
+
 </html>

@@ -22,27 +22,29 @@
 // 14) editDepartmentAdmin
 // 15) searchDepartmentAdmin
 // 16) deleteDepartmentAdmin
-// 17) viewAllSocieties
-// 18) addSocietyForm
-// 19) addSociety
-// 20) editSocietyForm
-// 21) editSociety
-// 22) searchSociety
-// 23) deleteSociety
-// 24) viewAllSocietyAdmins
-// 25) addSocietyAdminForm
-// 26) addSocietyAdmin
-// 27) editSocietyAdminForm
-// 28) editSocietyAdmin
-// 29) searchSocietyAdmin
-// 30) deleteSocietyAdmin
-// 31) viewAllStudents
-// 32) addStudentForm
-// 33) addStudent
-// 34) editStudentForm
-// 35) editStudent
-// 36) searchStudent
-// 37) deleteStudent
+// 17) viewAllDepartmentAnnouncements
+// 18) viewAllSocieties
+// 19) addSocietyForm
+// 20) addSociety
+// 21) editSocietyForm
+// 22) editSociety
+// 23) searchSociety
+// 24) deleteSociety
+// 25) viewAllSocietyAdmins
+// 26) addSocietyAdminForm
+// 27) addSocietyAdmin
+// 28) editSocietyAdminForm
+// 29) editSocietyAdmin
+// 30) searchSocietyAdmin
+// 31) deleteSocietyAdmin
+// 32) viewAllSocietyAnnouncements
+// 33) viewAllStudents
+// 33) addStudentForm
+// 34) addStudent
+// 35) editStudentForm
+// 36) editStudent
+// 37) searchStudent
+// 38) deleteStudent
 
 
 
@@ -55,6 +57,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Carbon\carbon;
 use File;
 use App\User;
 use App\Department;
@@ -80,7 +83,28 @@ class superAdminController extends Controller
     // |---------------------------------- 2) dashboard ----------------------------------|
     public function dashboard()
     {
-        return view('superAdmin.dashboard');
+        $departmentAnnouncements = [];
+        $societyAnnouncements = [];
+
+        $departments = Department::all();
+        foreach($departments as $department){
+        // count all departmentAnnouncements where time since departmentAnnouncements is less than 24 hours
+        $departmentAnnouncements[] = DepartmentAnnouncement::where([
+            ['department_id', $department->id],
+            ['created_at', '>=', Carbon::now()->subDays(1)]
+        ])->count();
+        }
+
+        $societies = Society::all();
+        foreach($societies as $society){
+        // count all societyAnnouncements where time since societyAnnouncements is less than 24 hours
+        $societyAnnouncements[] = SocietyAnnouncement::where([
+            ['society_id', $society->id],
+            ['created_at', '>=', Carbon::now()->subDays(1)]
+        ])->count();
+        }
+
+        return view('superAdmin.dashboard', compact('departmentAnnouncements', 'societyAnnouncements', 'departments', 'societies'));
     }
 
 
@@ -99,9 +123,9 @@ class superAdminController extends Controller
     {
         return view('superAdmin.department.addForm');
     }
-    
-    
-    
+
+
+
     // |---------------------------------- 5) addDepartment ----------------------------------|
     public function addDepartment(Request $req)
     {
@@ -178,6 +202,7 @@ class superAdminController extends Controller
     // |---------------------------------- 11) addDepartmentAdminForm ----------------------------------|
     public function addDepartmentAdminForm()
     {
+        $departments = Department::all();
         return view('superAdmin.departmentAdmin.addForm', compact('departments'));
     }
 
@@ -264,7 +289,18 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 17) viewAllSocieties ----------------------------------|
+    // |---------------------------------- 17) viewAllDepartmentAnnouncements ----------------------------------|
+    public function viewAllDepartmentAnnouncements($departmentId)
+    {
+        $departmentAnnouncements = DepartmentAnnouncement::where('department_id', $departmentId)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+        return view('superAdmin.department.viewAllDepartmentAnnouncements', compact('departmentAnnouncements'));
+    }
+
+
+
+    // |---------------------------------- 18) viewAllSocieties ----------------------------------|
     public function viewAllSocieties()
     {
         $societies = Society::orderBy('created_at', 'DESC')->get();
@@ -273,7 +309,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 18) addSocietyForm ----------------------------------|
+    // |---------------------------------- 19) addSocietyForm ----------------------------------|
     public function addSocietyForm()
     {
         return view('superAdmin.society.addForm');
@@ -281,7 +317,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 19) addSociety ----------------------------------|
+    // |---------------------------------- 20) addSociety ----------------------------------|
     public function addSociety(Request $req)
     {
         $society = new Society;
@@ -293,7 +329,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 20) editSocietyForm ----------------------------------|
+    // |---------------------------------- 21) editSocietyForm ----------------------------------|
     public function editSocietyForm($societyId)
     {
         $details = Society::find($societyId);
@@ -302,7 +338,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 21) editSociety ----------------------------------|
+    // |---------------------------------- 22) editSociety ----------------------------------|
     public function editSociety(Request $req, $societyId)
     {
         $details = Society::find($societyId);
@@ -314,7 +350,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 22) searchSociety ----------------------------------|
+    // |---------------------------------- 23) searchSociety ----------------------------------|
     public function searchSociety(Request $req)
     {
         $results = Society::where('societyCode', 'LIKE', '%' . $req->search . '%')
@@ -326,7 +362,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 23) deleteSociety ----------------------------------|
+    // |---------------------------------- 24) deleteSociety ----------------------------------|
     public function deleteSociety($societyId)
     {
         $society = Society::find($societyId);
@@ -359,7 +395,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 24) viewAllSocietyAdmins ----------------------------------|
+    // |---------------------------------- 25) viewAllSocietyAdmins ----------------------------------|
     public function viewAllSocietyAdmins()
     {
         $societyAdmins = User::where('userType', '2')->orderBy('created_at', 'DESC')->get();
@@ -368,7 +404,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 25) addSocietyAdminForm ----------------------------------|
+    // |---------------------------------- 26) addSocietyAdminForm ----------------------------------|
     public function addSocietyAdminForm()
     {
         $societies = Society::all();
@@ -377,7 +413,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 26) addSocietyAdmin ----------------------------------|
+    // |---------------------------------- 27) addSocietyAdmin ----------------------------------|
     public function addSocietyAdmin(Request $req)
     {
         // save admin details
@@ -403,7 +439,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 27) editSocietyAdminForm ----------------------------------|
+    // |---------------------------------- 28) editSocietyAdminForm ----------------------------------|
     public function editSocietyAdminForm($societyAdminId)
     {
         $details = User::find($societyAdminId);
@@ -414,7 +450,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 28) editSocietyAdmin ----------------------------------|
+    // |---------------------------------- 29) editSocietyAdmin ----------------------------------|
     public function editSocietyAdmin(Request $req, $societyAdminId)
     {
         $admin = User::find($societyAdminId);
@@ -451,7 +487,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 29) searchSocietyAdmin ----------------------------------|
+    // |---------------------------------- 30) searchSocietyAdmin ----------------------------------|
     public function searchSocietyAdmin(Request $req)
     {
         $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '2']])
@@ -464,7 +500,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 30) deleteSocietyAdmin ----------------------------------|
+    // |---------------------------------- 31) deleteSocietyAdmin ----------------------------------|
     public function deleteSocietyAdmin($societyAdminId)
     {
         $admin = User::find($societyAdminId);
@@ -474,7 +510,18 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 31) viewAllStudents ----------------------------------|
+    // |---------------------------------- 31) viewAllSocietyAnnouncements ----------------------------------|
+    public function viewAllSocietyAnnouncements($societyId)
+    {
+        $societyAnnouncements = SocietyAnnouncement::where('society_id', $societyId)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+        return view('superAdmin.society.viewAllSocietyAnnouncements', compact('societyAnnouncements'));
+    }
+
+
+
+    // |---------------------------------- 32) viewAllStudents ----------------------------------|
     public function viewAllStudents()
     {
         $students = User::where('userType', '3')->orderBy('created_at', 'DESC')->get();
@@ -483,7 +530,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 32) addStudentForm ----------------------------------|
+    // |---------------------------------- 33) addStudentForm ----------------------------------|
     public function addStudentForm()
     {
         $departments = Department::all();
@@ -492,7 +539,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 33) addStudent ----------------------------------|
+    // |---------------------------------- 34) addStudent ----------------------------------|
     public function addStudent(Request $req)
     {
         $student = new User;
@@ -508,7 +555,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 34) editStudentForm ----------------------------------|
+    // |---------------------------------- 35) editStudentForm ----------------------------------|
     public function editStudentForm($studentId)
     {
         $details = User::find($studentId);
@@ -518,7 +565,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 35) editStudent ----------------------------------|
+    // |---------------------------------- 36) editStudent ----------------------------------|
     public function editStudent(Request $req, $studentId)
     {
         $student = User::find($studentId);
@@ -550,7 +597,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 36) searchStudent ----------------------------------|
+    // |---------------------------------- 37) searchStudent ----------------------------------|
     public function searchStudent(Request $req)
     {
         $results = User::where([['name', 'LIKE', '%' . $req->search . '%'], ['userType', '3']])
@@ -563,7 +610,7 @@ class superAdminController extends Controller
 
 
 
-    // |---------------------------------- 37) deleteStudent ----------------------------------|
+    // |---------------------------------- 38) deleteStudent ----------------------------------|
     public function deleteStudent($studentId)
     {
         $student = User::find($studentId);
