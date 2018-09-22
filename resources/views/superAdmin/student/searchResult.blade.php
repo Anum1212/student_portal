@@ -1,4 +1,6 @@
-@extends('layouts.superAdminDashboard') @section('body')
+@extends('layouts.superAdminDashboard')
+@section('pageTitle', 'Search Result')
+@section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->

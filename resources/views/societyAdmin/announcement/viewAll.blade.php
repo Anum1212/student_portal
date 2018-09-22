@@ -1,4 +1,6 @@
-@extends('layouts.societyAdminDashboard') @section('body')
+@extends('layouts.societyAdminDashboard')
+@section('pageTitle', 'Announcements')
+@section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->

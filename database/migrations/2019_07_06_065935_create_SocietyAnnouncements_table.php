@@ -18,7 +18,7 @@ class CreateSocietyAnnouncementsTable extends Migration
             $table->timestamps();
             $table->integer('society_id');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('file')->nullable();
         });
     }

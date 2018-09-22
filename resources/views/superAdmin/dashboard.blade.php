@@ -1,5 +1,5 @@
 @extends('layouts.superAdminDashboard')
-
+@section('pageTitle', 'Dashboard')
 @section('body')
                 <!-- Container fluid  -->
             <div class="container-fluid">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
                 <!-- End PAge Content -->

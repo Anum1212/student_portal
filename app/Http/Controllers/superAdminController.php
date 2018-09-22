@@ -45,6 +45,10 @@
 // 36) editStudent
 // 37) searchStudent
 // 38) deleteStudent
+// 39) viewAllMessages
+// 40) viewMessage
+// 41) sendMessage
+// 42) deleteMessage
 
 
 
@@ -65,6 +69,7 @@ use App\DepartmentAnnouncement;
 use App\Society;
 use App\SocietyAnnouncement;
 use App\Society_User;
+use App\Message;
 
 class superAdminController extends Controller
 {
@@ -422,6 +427,7 @@ class superAdminController extends Controller
         $admin->email = $req->email;
         $admin->registration = $req->registration;
         $admin->password = Hash::make($req->registration);
+        $admin->society_id = $req->society;
         $admin->userType = '2';
         $admin->save();
 
@@ -615,6 +621,64 @@ class superAdminController extends Controller
     {
         $student = User::find($studentId);
         $student->delete();
+
         return redirect()->route('superAdmin.viewAllStudents');
+    }
+
+
+
+    // |---------------------------------- 39) viewAllMessages ----------------------------------|
+    public function viewAllMessages($senderType)
+    {
+        $unReadMessages = Message::where([['message_status', '0'], ['receiver_id', Auth::user()->id]])->orderBy('created_at', 'DESC')->get();
+         $readMessages = Message::where([['message_status', '!=', '0'], ['receiver_id', Auth::user()->id]])->orderBy('created_at', 'DESC')->get();
+
+        return view('superAdmin.messages.viewAll', compact('unReadMessages', 'readMessages'));
+    }
+
+
+
+    // |---------------------------------- 40) viewMessage ----------------------------------|
+    public function viewMessage($messageId)
+    {
+        $messageDetails = Message::whereId($messageId)->first();
+        $messages = Message::where([['sender_type', $messageDetails->sender_type],['message_status', '0'], ['receiver_id', Auth::user()->id]])
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        return view('superAdmin.messages.viewIndividual', compact('messageDetails', 'messages'));
+    }
+
+
+    // |---------------------------------- 41) sendMessage ----------------------------------|
+    public function sendMessage(Request $req, $replyToMessageId)
+    {
+        $messageDetails = Message::whereId($replyToMessageId)->first();
+
+        $message = new Message;
+
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->sender_type = Auth::user()->userType;
+        $message->receiver_id = $messageDetails->sender_id;
+        $message->receiver_type = $messageDetails->sender_type;
+        $message->message_type = '0';
+        $message->title = $req->title;
+        $message->message = $req->message;
+        $message->message_status = '1';
+        if ($req->file('messageFile')) {
+            Storage::put('public/messageFile', $req->messageFile);
+            $message->file = $req->messageFile->hashName();
+        }
+        $message->save();
+        return redirect()->route('superAdmin.viewAllMessages', ['senderType'=>$messageDetails->sender_type])->with('message', 'Message Sent');
+    }
+
+
+
+    // |---------------------------------- 42) deleteMessage ----------------------------------|
+    public function deleteMessage($messageId)
+    {
+        dd('deleteMessage '. $messageId);
     }
 }

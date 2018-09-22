@@ -68,45 +68,67 @@ Route::prefix('superAdmin')->group(function () {
     Route::put('/editStudent/{StudentId}', 'superAdminController@editStudent')->name('superAdmin.editStudent');
     Route::get('/searchStudent', 'superAdminController@searchStudent')->name('superAdmin.searchStudent');
     Route::delete('/deleteStudent/{StudentId}', 'superAdminController@deleteStudent')->name('superAdmin.deleteStudent');
+    // ************ MESSAGE MANAGEMENT ROUTES ************
+    Route::get('/viewAllMessages/{senderType}', 'superAdminController@viewAllMessages')->name('superAdmin.viewAllMessages');
+    Route::get('/viewMessage/{id}', 'superAdminController@viewMessage')->name('superAdmin.viewMessage');
+    Route::post('/sendMessage/{replyToMessageId}', 'superAdminController@sendMessage')->name('superAdmin.sendMessage');
+    Route::get('/deleteMessage/{id}', 'superAdminController@deleteMessage')->name('superAdmin.deleteMessage');
 });
 
 
 
 // |---------------------------------- departmentadmin Routes ----------------------------------|
 Route::prefix('departmentAdmin')->group(function () {
-Route::get('/dashboard', 'departmentAdminController@dashboard')->name('departmentAdmin.dashboard');
-Route::get('/viewAllAnnouncements', 'departmentAdminController@viewAllAnnouncements')->name('departmentAdmin.viewAllAnnouncements');
-Route::get('/addAnnouncementForm', 'departmentAdminController@addAnnouncementForm')->name('departmentAdmin.addAnnouncementForm');
-Route::post('/addAnnouncement', 'departmentAdminController@addAnnouncement')->name('departmentAdmin.addAnnouncement');
-Route::get('/editAnnouncementForm/{announcementId}', 'departmentAdminController@editAnnouncementForm')->name('departmentAdmin.editAnnouncementForm');
-Route::put('/editAnnouncement/{announcementId}', 'departmentAdminController@editAnnouncement')->name('departmentAdmin.editAnnouncement');
-Route::get('/searchAnnouncement', 'departmentAdminController@searchAnnouncement')->name('departmentAdmin.searchAnnouncement');
-Route::delete('/deleteAnnouncement/{announcementId}', 'departmentAdminController@deleteAnnouncement')->name('departmentAdmin.deleteAnnouncement');
+    Route::get('/dashboard', 'departmentAdminController@dashboard')->name('departmentAdmin.dashboard');
+    Route::get('/viewAllAnnouncements', 'departmentAdminController@viewAllAnnouncements')->name('departmentAdmin.viewAllAnnouncements');
+    Route::get('/addAnnouncementForm', 'departmentAdminController@addAnnouncementForm')->name('departmentAdmin.addAnnouncementForm');
+    Route::post('/addAnnouncement', 'departmentAdminController@addAnnouncement')->name('departmentAdmin.addAnnouncement');
+    Route::get('/editAnnouncementForm/{announcementId}', 'departmentAdminController@editAnnouncementForm')->name('departmentAdmin.editAnnouncementForm');
+    Route::put('/editAnnouncement/{announcementId}', 'departmentAdminController@editAnnouncement')->name('departmentAdmin.editAnnouncement');
+    Route::get('/searchAnnouncement', 'departmentAdminController@searchAnnouncement')->name('departmentAdmin.searchAnnouncement');
+    Route::delete('/deleteAnnouncement/{announcementId}', 'departmentAdminController@deleteAnnouncement')->name('departmentAdmin.deleteAnnouncement');
+    Route::get('/senderDetails/{senderId}', 'departmentAdminController@senderDetails')->name('departmentAdmin.senderDetails');
+// ************ MESSAGE MANAGEMENT ROUTES ************
+    Route::get('/viewAllMessages', 'departmentAdminController@viewAllMessages')->name('departmentAdmin.viewAllMessages');
+    Route::get('/viewMessage/{id}', 'departmentAdminController@viewMessage')->name('departmentAdmin.viewMessage');
+    Route::post('/sendMessage/{messageId?}', 'departmentAdminController@sendMessage')->name('departmentAdmin.sendMessage');
+    Route::get('/deleteMessage/{id}', 'departmentAdminController@deleteMessage')->name('departmentAdmin.deleteMessage');
 });
 
 
 
 // |---------------------------------- societyadmin Routes ----------------------------------|
-Route::prefix('societyAdmin')->group(function () {
-Route::get('/dashboard', 'societyAdminController@dashboard')->name('societyAdmin.dashboard');
-Route::get('/viewAllAnnouncements', 'societyAdminController@viewAllAnnouncements')->name('societyAdmin.viewAllAnnouncements');
-Route::get('/addAnnouncementForm', 'societyAdminController@addAnnouncementForm')->name('societyAdmin.addAnnouncementForm');
-Route::post('/addAnnouncement', 'societyAdminController@addAnnouncement')->name('societyAdmin.addAnnouncement');
-Route::get('/editAnnouncementForm/{announcementId}', 'societyAdminController@editAnnouncementForm')->name('societyAdmin.editAnnouncementForm');
-Route::put('/editAnnouncement/{announcementId}', 'societyAdminController@editAnnouncement')->name('societyAdmin.editAnnouncement');
-Route::get('/searchAnnouncement', 'societyAdminController@searchAnnouncement')->name('societyAdmin.searchAnnouncement');
-Route::delete('/deleteAnnouncement/{announcementId}', 'societyAdminController@deleteAnnouncement')->name('societyAdmin.deleteAnnouncement');
+    Route::prefix('societyAdmin')->group(function () {
+    Route::get('/dashboard', 'societyAdminController@dashboard')->name('societyAdmin.dashboard');
+    Route::get('/viewAllAnnouncements', 'societyAdminController@viewAllAnnouncements')->name('societyAdmin.viewAllAnnouncements');
+    Route::get('/addAnnouncementForm', 'societyAdminController@addAnnouncementForm')->name('societyAdmin.addAnnouncementForm');
+    Route::post('/addAnnouncement', 'societyAdminController@addAnnouncement')->name('societyAdmin.addAnnouncement');
+    Route::get('/editAnnouncementForm/{announcementId}', 'societyAdminController@editAnnouncementForm')->name('societyAdmin.editAnnouncementForm');
+    Route::put('/editAnnouncement/{announcementId}', 'societyAdminController@editAnnouncement')->name('societyAdmin.editAnnouncement');
+    Route::get('/searchAnnouncement', 'societyAdminController@searchAnnouncement')->name('societyAdmin.searchAnnouncement');
+    Route::delete('/deleteAnnouncement/{announcementId}', 'societyAdminController@deleteAnnouncement')->name('societyAdmin.deleteAnnouncement');
+    Route::get('/senderDetails/{senderId}', 'societyAdminController@senderDetails')->name('societyAdmin.senderDetails');
+// ************ MESSAGE MANAGEMENT ROUTES ************
+    Route::get('/viewAllMessages', 'societyAdminController@viewAllMessages')->name('societyAdmin.viewAllMessages');
+    Route::get('/viewMessage/{id}', 'societyAdminController@viewMessage')->name('societyAdmin.viewMessage');
+    Route::post('/sendMessage/{messageId?}', 'societyAdminController@sendMessage')->name('societyAdmin.sendMessage');
+    Route::get('/deleteMessage/{id}', 'societyAdminController@deleteMessage')->name('societyAdmin.deleteMessage');
 });
 
 
 
 // |---------------------------------- student Routes ----------------------------------|
-Route::prefix('student')->group(function () {
-Route::get('/dashboard', 'studentController@dashboard')->name('student.dashboard');
-Route::get('/departmentAnnouncements', 'studentController@departmentAnnouncements')->name('student.departmentAnnouncements');
-Route::get('/societyAnnouncements', 'studentController@societyAnnouncements')->name('student.societyAnnouncements');
-Route::get('/manageSocieties', 'studentController@manageSocieties')->name('student.manageSocieties');
-Route::get('/addSociety', 'studentController@addSociety')->name('student.addSociety');
-Route::get('/manageSocietyNotifications/{societyId}', 'studentController@manageSocietyNotifications')->name('student.manageSocietyNotifications');
-Route::get('/deleteSociety/{societyId}', 'studentController@deleteSociety')->name('student.deleteSociety');
+    Route::prefix('student')->group(function () {
+    Route::get('/dashboard', 'studentController@dashboard')->name('student.dashboard');
+    Route::get('/departmentAnnouncements', 'studentController@departmentAnnouncements')->name('student.departmentAnnouncements');
+    Route::get('/societyAnnouncements', 'studentController@societyAnnouncements')->name('student.societyAnnouncements');
+    Route::get('/manageSocieties', 'studentController@manageSocieties')->name('student.manageSocieties');
+    Route::get('/addSociety', 'studentController@addSociety')->name('student.addSociety');
+    Route::get('/manageSocietyNotifications/{societyId}', 'studentController@manageSocietyNotifications')->name('student.manageSocietyNotifications');
+    Route::get('/deleteSociety/{societyId}', 'studentController@deleteSociety')->name('student.deleteSociety');
+    // ************ MESSAGE MANAGEMENT ROUTES ************
+    Route::get('/viewAllMessages', 'studentController@viewAllMessages')->name('student.viewAllMessages');
+    Route::get('/viewMessage/{id}', 'studentController@viewMessage')->name('student.viewMessage');
+    Route::post('/sendMessage/{messageId?}', 'studentController@sendMessage')->name('student.sendMessage');
+    Route::get('/deleteMessage/{id}', 'studentController@deleteMessage')->name('student.deleteMessage');
 });

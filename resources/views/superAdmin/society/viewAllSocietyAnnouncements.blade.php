@@ -1,15 +1,14 @@
 @extends('layouts.superAdminDashboard')
+@section('pageTitle', 'Society Announcements')
 @section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->
     <div class="row">
         <div class="col-12">
+            @foreach($societyAnnouncements as $societyAnnouncement)
             <div class="card">
                 <div class="card-body">
-
-
-                    @foreach($societyAnnouncements as $societyAnnouncement)
                     <p>
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#announcement{{ $societyAnnouncement->id }}"
                             aria-expanded="false" aria-controls="announcement{{ $societyAnnouncement->id }}">
@@ -17,7 +16,7 @@
                         </button>
                     </p>
                     <div class="collapse" id="announcement{{ $societyAnnouncement->id }}">
-                        <div class="card card-body">
+                        <div class="card card-body bg-light">
                             @if($societyAnnouncement->description=="") No description @else {!! htmlspecialchars_decode($societyAnnouncement->description)
                             !!} @endif @if($societyAnnouncement->file !=null)
                             <div class="text-center bg-light">
@@ -26,11 +25,9 @@
                             @endif
                         </div>
                     </div>
-                    @endforeach
-
-
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
     <!-- End PAge Content -->

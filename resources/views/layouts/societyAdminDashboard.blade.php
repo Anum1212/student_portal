@@ -41,14 +41,10 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon -->
-                        <b>
-                            <img src="/themeAssets/elaAdmin/images/logo.png" alt="homepage" class="dark-logo" />
-                        </b>
+                        <b><img src="/themeAssets/elaAdmin/images/uol-logo.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span>
-                            <img src="/themeAssets/elaAdmin/images/logo-text.png" alt="homepage" class="dark-logo" />
-                        </span>
+                        <span><img src="/themeAssets/elaAdmin/images/uol-text.png" alt="homepage" class="dark-logo" /></span>
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -106,6 +102,10 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('societyAdmin.viewAllMessages') }}">
+                                <i class="text-success fa fa-envelope"></i>Messages</a>
+                        </li>
+                        <li>
                             <a href="{{ route('societyAdmin.viewAllAnnouncements') }}">
                                 <i class="text-danger fa fa-search"></i>
                                 <span class="hide-menu">View Announcements</span>
@@ -126,6 +126,11 @@
         <!-- End Left Sidebar  -->
         <!-- Page wrapper  -->
         <div class="page-wrapper">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">@yield('pageTitle')</h3>
+                </div>
+            </div>
             @include('includes.message') @include('includes.error') @section('body') @show
 
             <!-- footer -->

@@ -1,4 +1,5 @@
 @extends('layouts.societyAdminDashboard')
+@section('pageTitle', 'Dashboard')
 @section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">

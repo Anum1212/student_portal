@@ -1,4 +1,5 @@
 @extends('layouts.superAdminDashboard')
+@section('pageTitle', 'Department Annoncements')
 
 @section('body')
 <!-- Container fluid  -->

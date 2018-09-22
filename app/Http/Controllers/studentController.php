@@ -14,6 +14,8 @@
 // 6) addSociety
 // 7) manageSocietyNotifications
 // 8) deleteSociety
+// 9) viewAllMessages
+// 10) sendMessage
 
 
 
@@ -22,6 +24,8 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 use Carbon\carbon;
 use Auth;
 use App\User;
@@ -30,6 +34,7 @@ use App\DepartmentAnnouncement;
 use App\Society;
 use App\SocietyAnnouncement;
 use App\Society_User;
+use App\Message;
 use App\Notification;
 
 class studentController extends Controller
@@ -167,5 +172,85 @@ class studentController extends Controller
         $society->delete();
         $notification->delete();
         return redirect()->route('student.manageSocieties');
+    }
+
+
+
+    // |---------------------------------- 9) viewAllMessages ----------------------------------|
+    public function viewAllMessages()
+    {
+        $deptAdmins = User::where([
+            ['department_id', Auth::user()->department_id],
+            ['userType', '1']
+            ])->get();
+        $societies = Society::all();
+        $socAdmins = User::where('userType', '2')->get();
+
+        $unReadMessages = Message::where([['message_status', '0'], ['receiver_id', Auth::user()->id]])->orderBy('created_at', 'DESC')->get();
+        $readMessages = Message::where([['message_status', '!=', '0'], ['receiver_id', Auth::user()->id]])
+        ->orWhere('sender_id', Auth::user()->id)
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        return view('student.messages.viewAll', compact('deptAdmins', 'societies', 'socAdmins', 'unReadMessages', 'readMessages'));
+    }
+
+
+
+    // |---------------------------------- 12) viewMessage ----------------------------------|
+    public function viewMessage($messageId)
+    {
+        $messageDetails = Message::whereId($messageId)->first();
+        $messages = Message::where([['message_status', '0'], ['receiver_id', Auth::user()->id]])
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        if($messageDetails->message_status == '0'){
+            $messageDetails->message_status = '1';
+            $messageDetails->save();
+        }
+
+        return view('student.messages.viewIndividual', compact('messageDetails', 'messages'));
+    }
+
+
+
+    // |---------------------------------- 9) sendMessage ----------------------------------|
+    public function sendMessage(Request $req, $messageId=NULL)
+    {
+        $message = new Message;
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->sender_type = Auth::user()->userType;
+        $message->title = $req->title;
+        $message->message = $req->message;
+        if ($req->file('messageFile')) {
+            Storage::put('public/messageFile', $req->messageFile);
+            $message->file = $req->messageFile->hashName();
+        }
+
+        if($messageId){
+            $messageDetails = Message::find($messageId);
+            $message->message_type = '0';
+            $message->receiver_id = $messageDetails->sender_id;
+            $message->receiver_type = $messageDetails->sender_type;
+            $message->replied_to_message_id = $messageId;
+            $messageDetails->message_status = '2';
+            $messageDetails->save();
+        }
+
+        else{
+        $message->message_type = $req->messageType;
+        $sendTo = $req->sendTo;
+        // exploding the sendTo select option into two parts receiver_type and receiver_id
+        $sendToExploded = explode('-', $sendTo);
+        $receiver_type = $sendToExploded[0];
+        $receiver_id = $sendToExploded[1];
+        $message->receiver_id = $receiver_id;
+        $message->receiver_type = $receiver_type;
+        }
+
+        $message->save();
+        return redirect()->route('student.viewAllMessages')->with('message', 'Message Sent');
     }
 }

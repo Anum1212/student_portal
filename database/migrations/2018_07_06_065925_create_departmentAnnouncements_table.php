@@ -18,7 +18,7 @@ class CreateDepartmentAnnouncementsTable extends Migration
             $table->timestamps();
             $table->integer('department_id');
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('file')->nullable();
         });
     }

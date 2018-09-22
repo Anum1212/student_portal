@@ -23,7 +23,9 @@
     <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-    @section('head') @show @section('style') @show
+
+@section('head') @show
+@section('style') @show
 </head>
 
 <body class="fix-header fix-sidebar">
@@ -41,14 +43,10 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon -->
-                        <b>
-                            <img src="/themeAssets/elaAdmin/images/logo.png" alt="homepage" class="dark-logo" />
-                        </b>
+                        <b><img src="/themeAssets/elaAdmin/images/uol-logo.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span>
-                            <img src="/themeAssets/elaAdmin/images/logo-text.png" alt="homepage" class="dark-logo" />
-                        </span>
+                        <span><img src="/themeAssets/elaAdmin/images/uol-text.png" alt="homepage" class="dark-logo" /></span>
                     </a>
                 </div>
                 <!-- End Logo -->
@@ -106,6 +104,10 @@
                             </a>
                         </li>
                         <li>
+                            <a href="{{ route('departmentAdmin.viewAllMessages') }}">
+                                <i class="text-success fa fa-envelope"></i>Messages</a>
+                        </li>
+                        <li>
                             <a href="{{ route('departmentAdmin.viewAllAnnouncements') }}">
                                 <i class="text-danger fa fa-search"></i>
                                 <span class="hide-menu">View Announcements</span>
@@ -126,7 +128,14 @@
         <!-- End Left Sidebar  -->
         <!-- Page wrapper  -->
         <div class="page-wrapper">
-            @include('includes.message') @include('includes.error') @section('body') @show
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">@yield('pageTitle')</h3>
+                </div>
+            </div>
+    @include('includes.message')
+    @include('includes.error')
+@section('body') @show
 
             <!-- footer -->
             {{--
@@ -162,9 +171,9 @@
         // Image Upload
         var $imageupload = $('.imageupload');
         $imageupload.imageupload();
-
     </script>
-    @section('script') @show
+
+@section('script') @show
 </body>
 
 </html>

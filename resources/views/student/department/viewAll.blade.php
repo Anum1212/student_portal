@@ -1,14 +1,14 @@
-@extends('layouts.studentDashboard') @section('body')
+@extends('layouts.studentDashboard')
+@section('pageTitle', 'Department Announcements')
+@section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->
     <div class="row">
         <div class="col-12">
+            @foreach($departmentAnnouncements as $departmentAnnouncement)
             <div class="card">
                 <div class="card-body">
-
-
-                    @foreach($departmentAnnouncements as $departmentAnnouncement)
                     <p>
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#announcement{{ $departmentAnnouncement->id }}"
                             aria-expanded="false" aria-controls="announcement{{ $departmentAnnouncement->id }}">
@@ -29,11 +29,9 @@
                             @endif
                         </div>
                     </div>
-                    @endforeach
-
-
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
     <!-- End PAge Content -->

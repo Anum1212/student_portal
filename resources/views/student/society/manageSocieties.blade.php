@@ -1,4 +1,6 @@
-@extends('layouts.studentDashboard') @section('head')
+@extends('layouts.studentDashboard')
+@section('pageTitle', 'Manage Societies')
+@section('head')
 <link rel="stylesheet" href="/css/toggleSwitch.css"> @endsection @section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">

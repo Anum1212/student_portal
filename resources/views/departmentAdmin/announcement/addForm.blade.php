@@ -1,4 +1,6 @@
-@extends('layouts.departmentAdminDashboard') @section('body')
+@extends('layouts.departmentAdminDashboard')
+@section('pageTitle', 'Make Announcement')
+@section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->

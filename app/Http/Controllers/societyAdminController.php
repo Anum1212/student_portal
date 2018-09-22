@@ -15,6 +15,10 @@
 // 7) editAnnouncement
 // 8) searchAnnouncement
 // 9) deleteAnnouncement
+// 10) senderDetails
+// 11) viewAllMessages
+// 12) viewMessage
+// 13) sendMessage
 
 
 
@@ -30,6 +34,8 @@ use File;
 use Auth;
 use App\Society;
 use App\SocietyAnnouncement;
+use App\Message;
+use App\User;
 
 
 class societyAdminController extends Controller
@@ -141,5 +147,83 @@ class societyAdminController extends Controller
             Storage::delete('public/societyAnnouncements/' . $announcement->file);
             $announcement->delete();
         return redirect()->route('societyAdmin.viewAllAnnouncements');
+    }
+
+
+
+        // |---------------------------------- 10) senderDetails ----------------------------------|
+        public function senderDetails($senderId)
+        {
+            $details = User::find($senderId);
+            return view('departmentAdmin.senderDetails', compact('details'));
+        }
+
+
+
+    // |---------------------------------- 11) viewAllMessages ----------------------------------|
+    public function viewAllMessages()
+    {
+         $unReadMessages = Message::where([['message_status', '0'], ['receiver_id', Auth::user()->id]])->orderBy('created_at', 'DESC')->get();
+         $readMessages = Message::where([['message_status', '!=', '0'], ['receiver_id', Auth::user()->id]])
+         ->orWhere('sender_id', Auth::user()->id)
+         ->orderBy('created_at', 'DESC')
+         ->get();
+
+        return view('societyAdmin.messages.viewAll', compact('unReadMessages', 'readMessages'));
+    }
+
+
+
+// |---------------------------------- 12) viewMessage ----------------------------------|
+    public function viewMessage($messageId)
+    {
+        $messageDetails = Message::whereId($messageId)->first();
+        $messages = Message::where([['message_status', $messageDetails->message_status], ['receiver_id', Auth::user()->id]])
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        if($messageDetails->message_status == '0'){
+        $messageDetails->message_status = '1';
+        $messageDetails->save();
+        }
+
+        return view('societyAdmin.messages.viewIndividual', compact('messageDetails', 'messages'));
+    }
+
+
+
+    // |---------------------------------- 13) sendMessage ----------------------------------|
+    public function sendMessage(Request $req, $messageId=NULL)
+    {
+        $message = new Message;
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->sender_type = Auth::user()->userType;
+        $message->title = $req->title;
+        $message->message = $req->message;
+        if ($req->file('messageFile')) {
+            Storage::put('public/messageFile', $req->messageFile);
+            $message->file = $req->messageFile->hashName();
+        }
+
+        if($messageId){
+            $messageDetails = Message::find($messageId);
+            $message->message_type = '0';
+            $message->receiver_id = $messageDetails->sender_id;
+            $message->receiver_type = $messageDetails->sender_type;
+            $message->replied_to_message_id = $messageId;
+            $messageDetails->message_status = '2';
+            $messageDetails->save();
+        }
+
+        else{
+        $message->message_type = $req->messageType;
+        $message->receiver_id = '0';
+        $message->receiver_type = '0';
+        }
+
+        $message->save();
+
+        return redirect()->route('societyAdmin.viewAllMessages')->with('message', 'Message Sent');
     }
 }

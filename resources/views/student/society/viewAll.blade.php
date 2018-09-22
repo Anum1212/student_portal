@@ -1,4 +1,6 @@
-@extends('layouts.studentDashboard') @section('body')
+@extends('layouts.studentDashboard')
+@section('pageTitle', 'Society Announcements')
+@section('body')
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Page Content -->
@@ -15,8 +17,8 @@
                         </button>
                     </p>
                     <div class="collapse" id="society{{ $society->id }}">
-                        <div class="card card-body">
-                    @foreach($societyAnnouncements as $societyAnnouncement)
+                            @foreach($societyAnnouncements as $societyAnnouncement)
+                        <div class="card card-body bg-light">
                     @if($societyAnnouncement->society_id == $society->id)
                     <p>
                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#announcement{{ $societyAnnouncement->id }}"
@@ -39,8 +41,8 @@
                         </div>
                     </div>
                     @endif
-                    @endforeach
                 </div>
+                @endforeach
             </div>
 
         </div>
