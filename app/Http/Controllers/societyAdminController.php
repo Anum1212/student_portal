@@ -32,10 +32,13 @@ use Illuminate\Support\Facades\Input;
 use Carbon\carbon;
 use File;
 use Auth;
+use App\User;
 use App\Society;
+use App\Notification;
 use App\SocietyAnnouncement;
 use App\Message;
-use App\User;
+use Mail;
+use App\Mail\announcementUpdate;
 
 
 class societyAdminController extends Controller
@@ -95,6 +98,16 @@ class societyAdminController extends Controller
             $announcement->file = $req->announcementFile->hashName();
         }
         $announcement->save();
+
+        $announcementMakerName = Auth::user()->society[0]->societyName;
+
+        $societyUsers = Notification::where('society_id', Auth::user()->society[0]->id)->get();
+
+        foreach ($societyUsers as $societyUser) {
+            $student = User::where([['id', $societyUser->user_id], ['userType', '3']])->first();
+            Mail::send(new announcementUpdate($announcementMakerName, $announcement->title, $student));
+        }
+
         return redirect()->route('societyAdmin.viewAllAnnouncements');
     }
 

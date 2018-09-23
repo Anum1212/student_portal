@@ -36,6 +36,8 @@ use App\DepartmentAnnouncement;
 use App\Department;
 use App\Message;
 use App\User;
+use Mail;
+use App\Mail\announcementUpdate;
 
 class departmentAdminController extends Controller
 {
@@ -93,6 +95,14 @@ class departmentAdminController extends Controller
             $announcement->file = $req->announcementFile->hashName();
         }
         $announcement->save();
+
+        $department = Department::whereId(Auth::user()->department_id)->first();
+        $announcementMakerName = $department->departmentName;
+
+        $students = User::where([['department_id', Auth::user()->department_id],['userType', '3']])->get();
+        foreach ($students as $student) {
+            Mail::send(new announcementUpdate($announcementMakerName, $announcement->title, $student));
+        }
         return redirect()->route('departmentAdmin.viewAllAnnouncements');
     }
 
