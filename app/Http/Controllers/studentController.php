@@ -15,7 +15,9 @@
 // 7) manageSocietyNotifications
 // 8) deleteSociety
 // 9) viewAllMessages
-// 10) sendMessage
+// 10) viewMessage
+// 11) sendMessage
+// 12) cvBuilder
 
 
 
@@ -197,7 +199,7 @@ class studentController extends Controller
 
 
 
-    // |---------------------------------- 12) viewMessage ----------------------------------|
+    // |---------------------------------- 10) viewMessage ----------------------------------|
     public function viewMessage($messageId)
     {
         $messageDetails = Message::whereId($messageId)->first();
@@ -215,7 +217,7 @@ class studentController extends Controller
 
 
 
-    // |---------------------------------- 9) sendMessage ----------------------------------|
+    // |---------------------------------- 11) sendMessage ----------------------------------|
     public function sendMessage(Request $req, $messageId=NULL)
     {
         $message = new Message;
@@ -252,5 +254,14 @@ class studentController extends Controller
 
         $message->save();
         return redirect()->route('student.viewAllMessages')->with('message', 'Message Sent');
+    }
+
+
+
+    // |---------------------------------- 12) cvBuilder ----------------------------------|
+    public function cvBuilder()
+    {
+       return view('student.cvBuilder');
+
     }
 }

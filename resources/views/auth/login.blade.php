@@ -61,7 +61,7 @@
                     <div class="col-12">
                         <div class="hero-content-wrap flex flex-column justify-content-center align-items-start">
                             <header class="entry-header">
-                                <h1>University Of Lahore<br>Student Management Portal</h1>
+                                <h1>University Of Lahore<br>Digital Notice Board</h1>
                             </header>
                             <!-- .entry-header -->
 

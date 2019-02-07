@@ -131,4 +131,6 @@ Route::prefix('departmentAdmin')->group(function () {
     Route::get('/viewMessage/{id}', 'studentController@viewMessage')->name('student.viewMessage');
     Route::post('/sendMessage/{messageId?}', 'studentController@sendMessage')->name('student.sendMessage');
     Route::get('/deleteMessage/{id}', 'studentController@deleteMessage')->name('student.deleteMessage');
+    Route::get('/cvBuilder', 'studentController@cvBuilder')->name('student.cvBuilder');
+
 });
